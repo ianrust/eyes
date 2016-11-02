@@ -44,7 +44,6 @@ protected:
     void instantiateMappedFrame()
     {
         // initalize macro frame
-        current_macro_frame = std::make_shared<Mat>(macro_size, CV_8U);
         setMacroFrame();
         Size mapped_size(macro_size.width*micro_size.width,
                          macro_size.height*micro_size.height);
@@ -152,6 +151,8 @@ public:
             resize(orig, down_macro, down_macro.size(), 0, 0, INTER_LANCZOS4);
             macro_frames.push_back(down_macro);
         }
+        
+        current_macro_frame = std::make_shared<Mat>(macro_size, CV_8U);
 
         // initilize the mapped frame;
         instantiateMappedFrame();
@@ -182,6 +183,8 @@ public:
         int width = tmp_src.size().width * float(macro_height) * micro_aspect_ratio / float(tmp_src.size().height);
         int height = macro_height;
         macro_size = Size(width, height);
+        
+        current_macro_frame = std::make_shared<Mat>(macro_size, CV_8U);
 
         // initilize the mapped frame;
         instantiateMappedFrame();
@@ -191,9 +194,10 @@ protected:
     void setMacroFrame()
     {
         // read frame from cam
-        Mat tmp, tmp_gray;
+        Mat tmp, tmp_mirror, tmp_gray;
         cam.read(tmp);
-        cvtColor(tmp, tmp_gray, CV_RGB2GRAY); 
+        cv::flip(tmp, tmp_mirror, 1);
+        cvtColor(tmp_mirror, tmp_gray, CV_RGB2GRAY); 
         resize(tmp_gray, *current_macro_frame, macro_size, 0, 0, INTER_LANCZOS4);
         return;
     }
@@ -201,7 +205,6 @@ protected:
     VideoCapture cam;
 };
 
-//     VideoCapture frame_stream;
 //     std::vector<Mat> frame_loop;
 
 /// Global variables
@@ -217,8 +220,8 @@ int main( int argc, char** argv )
     int num_frames;
     sscanf(argv[3], "%d", &num_frames);
     // StaticGenerator gen(macro_path, 80, micro_path, 20, num_frames);
-    GifGenerator gen(macro_path, 20, num_frames, micro_path, 80, num_frames);
-    // CamGenerator gen(50, micro_path, 35, num_frames);
+    // GifGenerator gen(macro_path, 80, num_frames, micro_path, 20, num_frames);
+    CamGenerator gen(50, micro_path, 35, num_frames);
 
     MatPtr frame;
     namedWindow(window_name, CV_WINDOW_AUTOSIZE);
@@ -226,7 +229,7 @@ int main( int argc, char** argv )
     {
         frame = gen.getMappedFrame();
         imshow(window_name, *frame);
-        waitKey(70);
+        waitKey(40);
     }
 
     return 0;
