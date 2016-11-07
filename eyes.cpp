@@ -1,5 +1,6 @@
-#include "opencv2/imgproc/imgproc.hpp"
-#include "opencv2/highgui/highgui.hpp"
+#include <opencv2/imgproc/imgproc.hpp>
+#include <opencv2/highgui/highgui.hpp>
+#include <chrono>
 #include <iostream>
 #include <math.h>
 #include <memory>
@@ -9,6 +10,7 @@
 using namespace cv;
 
 typedef std::shared_ptr<Mat> MatPtr;
+typedef std::chrono::high_resolution_clock Clock;
 
 enum MACRO_FRAME_TYPE
 {
@@ -40,7 +42,37 @@ public:
         return current_mapped_frame;
     }
 
+    void loop(std::string window_name)
+    {
+        MatPtr frame;
+        namedWindow(window_name, CV_WINDOW_AUTOSIZE);
+        while (true)
+        {
+            frame = getMappedFrame();
+            imshow(window_name, *frame);
+            timedSleep(15);
+        }
+    }
+
 protected:
+
+    void timedSleep(float fps)
+    {
+        while (secondsSinceRelease() < 1/fps)
+        {
+            waitKey(1);
+        }
+        last_call = Clock::now();
+    }
+
+    float secondsSinceRelease()
+    {
+        auto now = Clock::now();
+        long ns = std::chrono::duration_cast<std::chrono::nanoseconds>(now - last_call).count();
+        float s = float(ns) * 1e-9;
+        return s;
+    }
+
     void instantiateMappedFrame()
     {
         // initalize macro frame
@@ -105,6 +137,8 @@ protected:
     Size micro_size;
     float micro_aspect_ratio;
     uint micro_index = 0;
+
+    std::chrono::time_point<std::chrono::system_clock> last_call;
 };
 
 class StaticGenerator : public MacroFrameGenerator
@@ -205,31 +239,74 @@ protected:
     VideoCapture cam;
 };
 
-//     std::vector<Mat> frame_loop;
+class VideoGenerator : public MacroFrameGenerator
+{
+public:
+    VideoGenerator(std::string macro_path, int macro_height, std::string micro_path, int micro_height, int num_micro_frames)
+    {
+        storeMicroFrames(micro_path, micro_height, num_micro_frames);
 
-/// Global variables
-Mat src, dst, black_dst, eye_dst;
-std::vector<Mat> frames;
-std::vector<Mat> full_frames;
-char* window_name = "eyes";
+        cam = VideoCapture(macro_path);
+        Mat tmp_src;
+        cam.read(tmp_src);
+
+        int width = tmp_src.size().width * float(macro_height) * micro_aspect_ratio / float(tmp_src.size().height);
+        int height = macro_height;
+        macro_size = Size(width, height);
+        
+        current_macro_frame = std::make_shared<Mat>(macro_size, CV_8U);
+
+        // initilize the mapped frame;
+        instantiateMappedFrame();
+    }
+
+protected:
+    void setMacroFrame()
+    {
+        // read frame from video
+        Mat tmp, tmp_gray;
+        cam.read(tmp);
+        cvtColor(tmp, tmp_gray, CV_RGB2GRAY); 
+        resize(tmp_gray, *current_macro_frame, macro_size, 0, 0, INTER_LANCZOS4);
+        return;
+    }
+
+    VideoCapture cam;
+};
+
 
 int main( int argc, char** argv )
 {
-    std::string macro_path(argv[1]);
-    std::string micro_path(argv[2]);
+    std::string mode(argv[1]);
+    std::string macro_path(argv[2]);
+    std::string micro_path(argv[3]);
     int num_frames;
-    sscanf(argv[3], "%d", &num_frames);
-    // StaticGenerator gen(macro_path, 80, micro_path, 20, num_frames);
-    // GifGenerator gen(macro_path, 80, num_frames, micro_path, 20, num_frames);
-    CamGenerator gen(50, micro_path, 35, num_frames);
+    sscanf(argv[4], "%d", &num_frames);
 
-    MatPtr frame;
-    namedWindow(window_name, CV_WINDOW_AUTOSIZE);
-    while (true)
+    if (mode == "static")
     {
-        frame = gen.getMappedFrame();
-        imshow(window_name, *frame);
-        waitKey(40);
+        StaticGenerator gen(macro_path, 40, micro_path, 70, num_frames);
+        gen.loop("static");
+    }
+    else if (mode == "gif")
+    {
+        GifGenerator gen(macro_path, 50, num_frames, micro_path, 40, num_frames);
+        gen.loop("animated geoff");
+    }
+    else if (mode == "mirror")
+    {
+        CamGenerator gen(30, micro_path, 60, num_frames);
+        gen.loop("mirror");
+    }
+    else if (mode == "video")
+    {
+        VideoGenerator gen(macro_path, 100, micro_path, 19, num_frames);
+        gen.loop(macro_path);
+    }
+    else
+    {
+        std::cerr << "unrecognized mode " << mode << std::endl;
+        return 1;
     }
 
     return 0;
