@@ -1,0 +1,8 @@
+mode : "gif"
+
+macro_path : "resources/gifs/eyeframe/eyeframe"
+macro_height : 50
+num_macro_frames : 16
+micro_path : "resources/gifs/eyeframe/eyeframe"
+micro_height : 30
+num_micro_frames : 16

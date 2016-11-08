@@ -12,33 +12,61 @@
 using namespace boost::filesystem;
 using namespace gixels;
 
+// TODO 
+// make full screen
+// make gif -> resource script
+// gixel cacher
+//   - detect # of frames
+//   - allow multiple gifs
+//   - closest by HSV
+// allow different number of frames in Gif generator
+// remove all absolute (/home/ian) paths
+// simpler paths in yaml files
+
+
 int main( int argc, char** argv )
 {
-    std::string mode(argv[1]);
-    std::string macro_path(argv[2]);
-    std::string micro_path(argv[3]);
-    int num_frames;
-    sscanf(argv[4], "%d", &num_frames);
+    std::string recipe_path(argv[1]);
+    YAML::Node recipe = YAML::LoadFile(recipe_path);
+
+    std::string mode = recipe["mode"].as<std::string>();
 
     if (mode == "static")
     {
-        StaticGenerator gen(macro_path, 40, micro_path, 70, num_frames);
+        StaticGenerator gen(recipe["macro_path"].as<std::string>(),
+                            recipe["macro_height"].as<int>(),
+                            recipe["micro_path"].as<std::string>(),
+                            recipe["micro_height"].as<int>(),
+                            recipe["num_micro_frames"].as<int>());
         gen.loop("static");
     }
     else if (mode == "gif")
     {
-        GifGenerator gen(macro_path, 50, num_frames, micro_path, 40, num_frames);
+        GifGenerator gen(recipe["macro_path"].as<std::string>(),
+                         recipe["macro_height"].as<int>(),
+                         recipe["num_macro_frames"].as<int>(),
+                         recipe["micro_path"].as<std::string>(),
+                         recipe["micro_height"].as<int>(),
+                         recipe["num_micro_frames"].as<int>());
         gen.loop("animated geoff");
     }
     else if (mode == "mirror")
     {
-        CamGenerator gen(30, micro_path, 60, num_frames);
+        CamGenerator gen(recipe["cam_number"].as<int>(),
+                         recipe["macro_height"].as<int>(),
+                         recipe["micro_path"].as<std::string>(),
+                         recipe["micro_height"].as<int>(),
+                         recipe["num_micro_frames"].as<int>());
         gen.loop("mirror");
     }
     else if (mode == "video")
     {
-        VideoGenerator gen(macro_path, 100, micro_path, 19, num_frames);
-        gen.loop(macro_path);
+        VideoGenerator gen(recipe["macro_path"].as<std::string>(),
+                           recipe["macro_height"].as<int>(),
+                           recipe["micro_path"].as<std::string>(),
+                           recipe["micro_height"].as<int>(),
+                           recipe["num_micro_frames"].as<int>());
+        gen.loop(recipe["macro_path"].as<std::string>());
     }
     else
     {

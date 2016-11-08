@@ -1,0 +1,7 @@
+mode : "mirror"
+
+cam_number : 0
+macro_height : 50
+micro_path : "resources/gifs/geom/geom"
+micro_height : 30
+num_micro_frames : 16
