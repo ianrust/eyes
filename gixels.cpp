@@ -11,7 +11,6 @@
 using namespace gixels;
 
 // TODO 
-// make full screen
 // remove all absolute (/home/ian) paths
 // simpler paths in yaml files
 // crop images, don't resize
