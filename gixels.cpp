@@ -1,4 +1,3 @@
-#include <boost/filesystem.hpp>
 #include <yaml-cpp/yaml.h>
 
 #include <iostream>
@@ -9,20 +8,15 @@
 
 #include <gixels/frame_generators.h>
 
-using namespace boost::filesystem;
 using namespace gixels;
 
 // TODO 
 // make full screen
-// make gif -> resource script
-// gixel cacher
-//   - detect # of frames
-//   - allow multiple gifs
-//   - closest by HSV
-// allow different number of frames in Gif generator
 // remove all absolute (/home/ian) paths
 // simpler paths in yaml files
-
+// crop images, don't resize
+// make sure hsv mapping is working
+// fix ratio on single gixel things
 
 int main( int argc, char** argv )
 {
@@ -36,37 +30,32 @@ int main( int argc, char** argv )
         StaticGenerator gen(recipe["macro_path"].as<std::string>(),
                             recipe["macro_height"].as<int>(),
                             recipe["micro_path"].as<std::string>(),
-                            recipe["micro_height"].as<int>(),
-                            recipe["num_micro_frames"].as<int>());
-        gen.loop("static");
+                            recipe["micro_height"].as<int>());
+        gen.loop("static", recipe["fps"].as<float>());
     }
     else if (mode == "gif")
     {
         GifGenerator gen(recipe["macro_path"].as<std::string>(),
                          recipe["macro_height"].as<int>(),
-                         recipe["num_macro_frames"].as<int>(),
                          recipe["micro_path"].as<std::string>(),
-                         recipe["micro_height"].as<int>(),
-                         recipe["num_micro_frames"].as<int>());
-        gen.loop("animated geoff");
+                         recipe["micro_height"].as<int>());
+        gen.loop("animated geoff", recipe["fps"].as<float>());
     }
     else if (mode == "mirror")
     {
         CamGenerator gen(recipe["cam_number"].as<int>(),
                          recipe["macro_height"].as<int>(),
                          recipe["micro_path"].as<std::string>(),
-                         recipe["micro_height"].as<int>(),
-                         recipe["num_micro_frames"].as<int>());
-        gen.loop("mirror");
+                         recipe["micro_height"].as<int>());
+        gen.loop("mirror", recipe["fps"].as<float>());
     }
     else if (mode == "video")
     {
         VideoGenerator gen(recipe["macro_path"].as<std::string>(),
                            recipe["macro_height"].as<int>(),
                            recipe["micro_path"].as<std::string>(),
-                           recipe["micro_height"].as<int>(),
-                           recipe["num_micro_frames"].as<int>());
-        gen.loop(recipe["macro_path"].as<std::string>());
+                           recipe["micro_height"].as<int>());
+        gen.loop(recipe["macro_path"].as<std::string>(), recipe["fps"].as<float>());
     }
     else
     {

@@ -2,6 +2,6 @@ mode : "static"
 
 macro_path : "resources/static/me.jpg"
 macro_height : 50
-micro_path : "/home/ian/eyes/resources/gifs/geom"
+micro_path : "/home/ian/eyes/resources/gifs"
 micro_height : 30
 fps: 20

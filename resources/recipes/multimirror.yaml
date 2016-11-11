@@ -2,6 +2,6 @@ mode : "mirror"
 
 cam_number : 0
 macro_height : 50
-micro_path : "/home/ian/eyes/resources/gifs/geom"
+micro_path : "/home/ian/eyes/resources/gifs"
 micro_height : 30
 fps: 30
