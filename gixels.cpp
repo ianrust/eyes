@@ -14,7 +14,6 @@ using namespace gixels;
 // remove all absolute (/home/ian) paths
 // simpler paths in yaml files
 // crop images, don't resize
-// make sure hsv mapping is working
 // fix ratio on single gixel things
 
 int main( int argc, char** argv )
