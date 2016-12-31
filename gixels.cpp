@@ -23,13 +23,28 @@ int main( int argc, char** argv )
 
     std::string mode = recipe["mode"].as<std::string>();
 
+    std::string filename;
+    bool save = argc > 2;
+    if (save)
+    {
+        filename = std::string(argv[2]);
+    }
+
     if (mode == "static")
     {
+
         StaticGenerator gen(recipe["macro_path"].as<std::string>(),
                             recipe["macro_height"].as<int>(),
                             recipe["micro_path"].as<std::string>(),
                             recipe["micro_height"].as<int>());
-        gen.loop("static", recipe["fps"].as<float>());
+        if (!save)
+        {
+            gen.loop("static", recipe["fps"].as<float>());
+        }
+        else
+        {
+            gen.loopSave(filename, recipe["fps"].as<float>());
+        }
     }
     else if (mode == "gif")
     {
@@ -37,7 +52,14 @@ int main( int argc, char** argv )
                          recipe["macro_height"].as<int>(),
                          recipe["micro_path"].as<std::string>(),
                          recipe["micro_height"].as<int>());
-        gen.loop("animated geoff", recipe["fps"].as<float>());
+        if (!save)
+        {
+            gen.loop("animated geoff", recipe["fps"].as<float>());
+        }
+        else
+        {
+            gen.loopSave(filename, recipe["fps"].as<float>());
+        }
     }
     else if (mode == "mirror")
     {
@@ -45,7 +67,14 @@ int main( int argc, char** argv )
                          recipe["macro_height"].as<int>(),
                          recipe["micro_path"].as<std::string>(),
                          recipe["micro_height"].as<int>());
-        gen.loop("mirror", recipe["fps"].as<float>());
+        if (!save)
+        {
+            gen.loop("mirror", recipe["fps"].as<float>());
+        }
+        else
+        {
+            gen.loopSave(filename, recipe["fps"].as<float>());
+        }
     }
     else if (mode == "video")
     {
@@ -53,7 +82,14 @@ int main( int argc, char** argv )
                            recipe["macro_height"].as<int>(),
                            recipe["micro_path"].as<std::string>(),
                            recipe["micro_height"].as<int>());
-        gen.loop(recipe["macro_path"].as<std::string>(), recipe["fps"].as<float>());
+        if (!save)
+        {
+            gen.loop(recipe["macro_path"].as<std::string>(), recipe["fps"].as<float>());
+        }
+        else
+        {
+            gen.loopSave(filename, recipe["fps"].as<float>());
+        }
     }
     else
     {

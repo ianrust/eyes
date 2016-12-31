@@ -1,7 +1,7 @@
 mode : "gif"
 
-macro_path : "/home/ian/eyes/resources/gifs/hamburger"
+macro_path : "resources/gifs/hamburger"
 macro_height : 50
-micro_path : "/home/ian/eyes/resources/gifs/eye"
+micro_path : "resources/gifs/eye"
 micro_height : 30
 fps: 15

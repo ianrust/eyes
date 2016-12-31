@@ -1,5 +1,7 @@
 #pragma once
 
+#include <array>
+
 #include <boost/filesystem.hpp>
 #include <opencv2/imgproc/imgproc.hpp>
 #include <opencv2/highgui/highgui.hpp>
@@ -171,8 +173,7 @@ public:
             {
                 float distance = g->distanceFromHue(float(h));
                 if ((least_hue_dist < 0 ||
-                     distance < least_hue_dist) &&
-                    !distance < 1.0)
+                     distance < least_hue_dist))
                 {
                     gixels[h] = g;
                     least_hue_dist = distance;
@@ -199,12 +200,18 @@ public:
             {
                 // find the micro frame with the closest distance to the macro frame in voronoi region
                 int hue_index = round((int(macro_frame->at<Vec3b>(j,i)(0))%180)*2);
+                hue_index = (hue_index + micro_index) % 360;
                 GixelPtr closest_gixel = gixels[hue_index];
 
                 // then set it
                 closest_gixel->fillPixel(mapped_frame, macro_frame, micro_index, i, j);
             }
         }
+    }
+
+    int loopNumber(int micro_index)
+    {
+        return int(floor(float(micro_index) / 360.0));
     }
 
 private:

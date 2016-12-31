@@ -1,0 +1,7 @@
+mode : "video"
+
+macro_path : "/home/ian/Downloads/mononoke/mononoke.mkv"
+macro_height : 50
+micro_path : "resources/gifs/geom"
+micro_height : 30
+fps: 30

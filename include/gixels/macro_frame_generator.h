@@ -1,8 +1,9 @@
 #pragma once
 
+#include <chrono>
+
 #include <opencv2/imgproc/imgproc.hpp>
 #include <opencv2/highgui/highgui.hpp>
-#include <chrono>
 
 #include <gixels/gixel_cacher.h>
 
@@ -26,22 +27,69 @@ class MacroFrameGenerator
 public:
     MacroFrameGenerator(){}
 
+    void loopSave(std::string file_name, float fps)
+    {
+        VideoWriter writer(file_name, CV_FOURCC('W', 'M', 'V', '2'), fps, current_mapped_frame->size(), true);
+        MatPtr frame_hsv;
+        Mat frame;
+        bool done = false;
+        namedWindow(file_name, CV_WINDOW_NORMAL);
+        while (!done)
+        {
+            frame_hsv = getMappedFrame(done);
+            cvtColor(*frame_hsv, frame, CV_HSV2BGR);
+            setWindowProperty(file_name, CV_WND_PROP_FULLSCREEN, CV_WINDOW_FULLSCREEN);
+            imshow(file_name, frame);
+            timedSleep(fps);
+            writer.write(frame);
+        }
+    }
+
     void loop(std::string window_name, float fps)
     {
         MatPtr frame_hsv;
-        Mat frame;
+        Mat frame, frame_scaled;
         namedWindow(window_name, CV_WINDOW_NORMAL);
+        int out_height = 720;
+        int out_width = 1280;
+        float output_aspect = float(out_width)/float(out_height);
+        Mat output(out_height, out_width, CV_8UC3, Scalar(0,0,0));
         while (true)
         {
             frame_hsv = getMappedFrame();
             cvtColor(*frame_hsv, frame, CV_HSV2BGR);
-            setWindowProperty(window_name, CV_WND_PROP_FULLSCREEN, 1);
-            imshow(window_name, frame);
+
+            float frame_height = frame.size().height;
+            float frame_width = frame.size().width;
+            float frame_aspect = frame_width/frame_height;
+
+            if (frame_aspect < output_aspect)
+            {
+                int scale_width = int(frame_aspect*out_height);
+                resize(frame, frame_scaled, Size(scale_width, out_height));
+                frame_scaled.copyTo(output(Rect(out_width/2-scale_width/2, 0, scale_width, out_height)));
+            }
+            else
+            {
+                int scale_height = int(out_width/frame_aspect);
+                resize(frame, frame_scaled, Size(out_width, scale_height));
+                frame_scaled.copyTo(output(Rect(0, out_height/2-scale_height/2, out_width, scale_height)));
+            }
+
+            imshow(window_name, output);
+            setWindowProperty(window_name, CV_WND_PROP_FULLSCREEN, CV_WINDOW_FULLSCREEN);
             timedSleep(fps);
         }
     }
 
 protected:
+
+    MatPtr getMappedFrame(bool& done)
+    {
+        MatPtr return_frame = getMappedFrame();
+        done = gixel_cacher.loopNumber(micro_index) == 1;
+        return return_frame;
+    }
 
     MatPtr getMappedFrame() // rgb micro frame mapped to pixels to current macro frame
     {
@@ -105,7 +153,7 @@ protected:
     Size micro_size;
     uint micro_index = 0;
 
-    std::chrono::time_point<std::chrono::system_clock> last_call;
+    std::chrono::time_point<std::chrono::high_resolution_clock> last_call;
 };
 
 }

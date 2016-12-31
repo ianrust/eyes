@@ -1,0 +1,7 @@
+mode : "static"
+
+macro_path : "resources/static/dickbutt.jpg"
+macro_height : 50
+micro_path : "resources/gifs/geom"
+micro_height : 40
+fps: 40
