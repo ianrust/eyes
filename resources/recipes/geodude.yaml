@@ -1,6 +1,6 @@
 mode : "static"
 
-macro_path : "resources/static/me.jpg"
+macro_path : "resources/static/cover.png"
 macro_height : 50
 micro_path : "resources/gifs/geom"
 micro_height : 30

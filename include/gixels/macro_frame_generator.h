@@ -29,17 +29,14 @@ public:
 
     void loopSave(std::string file_name, float fps)
     {
-        VideoWriter writer(file_name, CV_FOURCC('W', 'M', 'V', '2'), fps, current_mapped_frame->size(), true);
+        VideoWriter writer(file_name, CV_FOURCC('W', 'M', 'V', '3'), fps, current_mapped_frame->size(), true);
         MatPtr frame_hsv;
         Mat frame;
         bool done = false;
-        namedWindow(file_name, CV_WINDOW_NORMAL);
         while (!done)
         {
             frame_hsv = getMappedFrame(done);
             cvtColor(*frame_hsv, frame, CV_HSV2BGR);
-            setWindowProperty(file_name, CV_WND_PROP_FULLSCREEN, CV_WINDOW_FULLSCREEN);
-            imshow(file_name, frame);
             timedSleep(fps);
             writer.write(frame);
         }
@@ -50,8 +47,14 @@ public:
         MatPtr frame_hsv;
         Mat frame, frame_scaled;
         namedWindow(window_name, CV_WINDOW_NORMAL);
-        int out_height = 720;
-        int out_width = 1280;
+
+        // projector
+        int out_height = 1200;
+        int out_width = 1920;
+        // retina
+        // int out_height = 1050;
+        // int out_width = 1680;
+
         float output_aspect = float(out_width)/float(out_height);
         Mat output(out_height, out_width, CV_8UC3, Scalar(0,0,0));
         while (true)
@@ -107,7 +110,6 @@ protected:
 
     void timedSleep(float fps)
     {
-
         int wait = std::max(1, int(1000*(1/fps - secondsSinceRelease())));
         waitKey(wait);
         last_call = Clock::now();

@@ -116,20 +116,36 @@ class VideoGenerator : public MacroFrameGenerator
 public:
     VideoGenerator(std::string macro_path, int macro_height, std::string micro_path, int micro_height)
     {
+        namedWindow("window_name", CV_WINDOW_NORMAL);
+        std::cout << "b" << std::endl;
         storeMicroFrames(micro_path, micro_height);
+        std::cout << "b" << std::endl;
 
         cam = VideoCapture(macro_path);
+        // cam.set(CV_CAP_PROP_FOURCC, )
+        std::cout << macro_path << std::endl;
         Mat tmp_src;
-        cam.read(tmp_src);
+        while (!cam.isOpened()) {
+            std::cout << "blag" << std::endl;
+        }
+            imshow("window_name", tmp_src);
+        std::cout << "b" << std::endl;
 
         int width = tmp_src.size().width * float(macro_height) / float(tmp_src.size().height);
+        std::cout << "b" << std::endl;
         int height = macro_height;
         macro_size = Size(width, height);
         
+        std::cout << "be" << std::endl;
+        std::cout << tmp_src.depth() << std::endl;
+        std::cout << tmp_src.size() << std::endl;
+        std::cout << macro_size << std::endl;
         current_macro_frame = std::make_shared<Mat>(macro_size, tmp_src.depth());
 
+        std::cout << "bi" << std::endl;
         // initilize the mapped frame;
         instantiateMappedFrame();
+        std::cout << "b" << std::endl;
     }
 
 protected:

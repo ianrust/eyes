@@ -199,7 +199,7 @@ public:
             for (uint j = 0; j < macro_frame->size().height; j++)
             {
                 // find the micro frame with the closest distance to the macro frame in voronoi region
-                int hue_index = round((int(macro_frame->at<Vec3b>(j,i)(0))%180)*2);
+                int hue_index = round((int(macro_frame->at<Vec3b>(j,i)(micro_index))%180));
                 hue_index = (hue_index + micro_index) % 360;
                 GixelPtr closest_gixel = gixels[hue_index];
 
