@@ -1,0 +1,7 @@
+mode : "static"
+
+macro_path : "resources/static/opolis.jpeg"
+macro_height : 80
+micro_path : "resources/gifs/face1"
+micro_height : 20
+fps: 30

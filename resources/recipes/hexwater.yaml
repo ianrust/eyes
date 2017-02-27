@@ -1,0 +1,7 @@
+mode : "gif"
+
+macro_path : "resources/gifs/hexwater"
+macro_height : 150
+micro_path : "resources/remosaicsartwork"
+micro_height : 40
+fps: 6

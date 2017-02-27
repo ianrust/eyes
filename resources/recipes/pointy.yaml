@@ -1,0 +1,7 @@
+mode : "gif"
+
+macro_path : "resources/gifs/cycle"
+macro_height : 100
+micro_path : "resources/gifs/smoke1"
+micro_height : 10
+fps: 15

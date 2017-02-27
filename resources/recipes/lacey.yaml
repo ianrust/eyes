@@ -1,0 +1,7 @@
+mode : "gif"
+
+macro_path : "resources/gifs/laceymicallef"
+macro_height : 60
+micro_path : "resources/emoji"
+micro_height : 20
+fps: 15
