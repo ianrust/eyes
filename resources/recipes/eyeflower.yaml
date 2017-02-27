@@ -1,0 +1,7 @@
+mode : "static"
+
+macro_path : "resources/gifs/eye/eye000.png"
+macro_height : 100
+micro_path : "resources/remosaicsartwork"
+micro_height : 4
+fps: 30
