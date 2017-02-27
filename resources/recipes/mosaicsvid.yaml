@@ -1,0 +1,90 @@
+mode : "sequence"
+fps: 30
+
+# intro kicks
+
+sections:
+  - mode : "static"
+    macro_path : "resources/gifs/eye/eye000.png"
+    macro_height : 1
+    micro_path : "resources/remosaicsartwork"
+    micro_height : 1920
+    duration: 0.75
+  - mode : "static"
+    macro_path : "resources/gifs/eye/eye000.png"
+    macro_height : 4
+    micro_path : "resources/remosaicsartwork"
+    micro_height : 480
+    duration: 0.75
+  - mode : "static"
+    macro_path : "resources/gifs/eye/eye000.png"
+    macro_height : 16
+    micro_path : "resources/remosaicsartwork"
+    micro_height : 120
+    duration: 0.75
+  - mode : "static"
+    macro_path : "resources/gifs/eye/eye000.png"
+    macro_height : 64
+    micro_path : "resources/remosaicsartwork"
+    micro_height : 30
+    duration: 0.75
+  - mode : "static"
+    macro_path : "resources/gifs/eye/eye000.png"
+    macro_height : 256
+    micro_path : "resources/gifs/hexwater"
+    micro_height : 8
+    duration: 0.75
+  - mode : "gif"
+    macro_path : "resources/gifs/eye"
+    macro_height : 256
+    micro_path : "resources/gifs/smoke1"
+    micro_height : 8
+    fps: 30
+    fps_multiplier: 0.533
+    duration: 2.0
+  - mode : "gif"
+    macro_path : "resources/gifs/nazi"
+    macro_height : 80
+    micro_path : "resources/gifs/face2"
+    micro_height : 20
+    fps: 30
+    fps_multiplier: 0.9
+    duration: 2.0
+  - mode : "static"
+    macro_path : "resources/gifs/eye/eye000.png"
+    macro_height : 64
+    micro_path : "resources/remosaicsartwork"
+    micro_height : 30
+    duration: 0.1
+    duration: 2.0
+  - mode : "static"
+    macro_path : "resources/gifs/eye/eye000.png"
+    macro_height : 256
+    micro_path : "resources/gifs/hexwater"
+    micro_height : 8
+    duration: 0.1
+    duration: 2.0
+  - mode : "gif"
+    macro_path : "resources/gifs/eye"
+    macro_height : 256
+    micro_path : "resources/gifs/smoke1"
+    micro_height : 8
+    fps_multiplier: 0.533
+    duration: 0.1
+  - mode : "gif"
+    macro_path : "resources/gifs/nazi"
+    macro_height : 80
+    micro_path : "resources/gifs/face2"
+    micro_height : 20
+    fps_multiplier: 0.9
+    duration: 0.1
+  - mode : "gif"
+    macro_path : "resources/gifs/cycle"
+    macro_height : 100
+    micro_path : "resources/gifs/smoke1"
+    micro_height : 10
+  - mode : "gif"
+    macro_path : "resources/gifs/body"
+    macro_height : 100
+    micro_path : "resources/gifs/smoke1"
+    micro_height : 10

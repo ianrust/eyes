@@ -1,8 +1,8 @@
-mode : "gif"
+mode : "static"
 
-macro_path : "resources/gifs/nazi"
+macro_path : "resources/static/opolis.jpeg"
 macro_height : 80
 micro_path : "resources/gifs/face2"
 micro_height : 20
 fps: 30
-fps_multiplier: 0.9
+duration: 10

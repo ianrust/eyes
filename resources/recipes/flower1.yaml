@@ -1,7 +1,10 @@
 mode : "static"
 
+# intro kicks
+
 macro_path : "resources/static/flower.JPG"
-macro_height : 50
+macro_height : 1
 micro_path : "resources/remosaicsartwork"
 micro_height : 40
-fps: 15
+fps: 30
+length: 0.5

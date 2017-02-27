@@ -36,9 +36,10 @@ protected:
 class GifGenerator : public MacroFrameGenerator
 {
 public:
-    GifGenerator(std::string macro_path, int macro_height, std::string micro_path, int micro_height)
+    GifGenerator(std::string macro_path, int macro_height, std::string micro_path, int micro_height, float fps_multiplier)
     {
         storeMicroFrames(micro_path, micro_height);
+        _fps_multiplier = fps_multiplier;
 
         path gif_path(macro_path);
         std::vector<path> v;
@@ -68,11 +69,12 @@ protected:
     void setMacroFrame()
     {
         // cycle through
-        *current_macro_frame = macro_frames[micro_index % macro_frames.size()];
+        *current_macro_frame = macro_frames[int(float(micro_index)*_fps_multiplier) % macro_frames.size()];
         return;
     }
 
     std::vector<Mat> macro_frames;
+    float _fps_multiplier;
 };
 
 class CamGenerator : public MacroFrameGenerator

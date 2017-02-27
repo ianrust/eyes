@@ -27,19 +27,45 @@ class MacroFrameGenerator
 public:
     MacroFrameGenerator(){}
 
-    void loopSave(std::string file_name, float fps)
+    void loopSave(VideoWriter& writer, std::string file_name, float fps, float duration)
     {
-        VideoWriter writer(file_name, CV_FOURCC('W', 'M', 'V', '3'), fps, current_mapped_frame->size(), true);
         MatPtr frame_hsv;
-        Mat frame;
+        Mat frame, frame_scaled;
         bool done = false;
-        while (!done)
+        int frame_count  = 0;
+
+        int out_height = 1200;
+        int out_width = 1920;
+
+        float output_aspect = float(out_width)/float(out_height);
+        Mat output(out_height, out_width, CV_8UC3, Scalar(0,0,0));
+
+        while (frame_count < duration*fps)
         {
             frame_hsv = getMappedFrame(done);
             cvtColor(*frame_hsv, frame, CV_HSV2BGR);
-            timedSleep(fps);
-            writer.write(frame);
+
+            float frame_height = frame.size().height;
+            float frame_width = frame.size().width;
+            float frame_aspect = frame_width/frame_height;
+
+            if (frame_aspect < output_aspect)
+            {
+                int scale_width = int(frame_aspect*out_height);
+                resize(frame, frame_scaled, Size(scale_width, out_height));
+                frame_scaled.copyTo(output(Rect(out_width/2-scale_width/2, 0, scale_width, out_height)));
+            }
+            else
+            {
+                int scale_height = int(out_width/frame_aspect);
+                resize(frame, frame_scaled, Size(out_width, scale_height));
+                frame_scaled.copyTo(output(Rect(0, out_height/2-scale_height/2, out_width, scale_height)));
+            }
+
+            writer.write(output);
+            frame_count++;
         }
+
     }
 
     void loop(std::string window_name, float fps)
