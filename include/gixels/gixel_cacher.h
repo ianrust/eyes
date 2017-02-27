@@ -169,6 +169,8 @@ public:
             GixelPtr closest_gixel;
             float least_hue_dist = -1;
             std::vector<GixelPtr> coincident_gixels;
+            int closest_index = 0;
+            int index = 0;
             for (GixelPtr g : loaded_gixels)
             {
                 float distance = g->distanceFromHue(float(h));
@@ -177,12 +179,20 @@ public:
                 {
                     gixels[h] = g;
                     least_hue_dist = distance;
+                    closest_index = index;
                 }
+                index++;
+            }
 
-                if (distance < 1.0)
+            index = 0;
+            for (GixelPtr g : loaded_gixels)
+            {
+                float distance = g->distanceFromHue(float(h));
+                if (distance < 1 && index != closest_index)
                 {
                     coincident_gixels.push_back(g);
                 }
+                index++;
             }
 
             for (GixelPtr c_g : coincident_gixels)
