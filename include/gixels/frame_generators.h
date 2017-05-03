@@ -8,7 +8,8 @@ namespace gixels
 class StaticGenerator : public MacroFrameGenerator
 {
 public:
-    StaticGenerator(std::string macro_path, int macro_height, std::string micro_path, int micro_height)
+    StaticGenerator(std::string macro_path, int macro_height, std::string micro_path, int micro_height, std::string window_name, float fps) :
+        MacroFrameGenerator(window_name, fps)
     {
         storeMicroFrames(micro_path, micro_height);
 
@@ -25,6 +26,12 @@ public:
         instantiateMappedFrame();
     }
 
+    bool finishedDisplayLoop()
+    {
+
+        return (((micro_index % 360) <= 3) && (micro_index > 3));
+    }
+
 protected:
     void setMacroFrame()
     {
@@ -36,7 +43,8 @@ protected:
 class GifGenerator : public MacroFrameGenerator
 {
 public:
-    GifGenerator(std::string macro_path, int macro_height, std::string micro_path, int micro_height)
+    GifGenerator(std::string macro_path, int macro_height, std::string micro_path, int micro_height, std::string window_name, float fps) :
+        MacroFrameGenerator(window_name, fps)
     {
         storeMicroFrames(micro_path, micro_height);
 
@@ -64,6 +72,11 @@ public:
         instantiateMappedFrame();
     }
 
+    bool finishedDisplayLoop()
+    {
+        return (((micro_index % 360) <= 3) && ((micro_index % macro_frames.size()) <= 3) && (micro_index > 3));
+    }
+
 protected:
     void setMacroFrame()
     {
@@ -78,7 +91,8 @@ protected:
 class CamGenerator : public MacroFrameGenerator
 {
 public:
-    CamGenerator(int cam_number, int macro_height, std::string micro_path, int micro_height)
+    CamGenerator(int cam_number, int macro_height, std::string micro_path, int micro_height, std::string window_name, float fps) :
+        MacroFrameGenerator(window_name, fps)
     {
         storeMicroFrames(micro_path, micro_height);
 
@@ -94,6 +108,11 @@ public:
 
         // initilize the mapped frame;
         instantiateMappedFrame();
+    }
+
+    bool finishedDisplayLoop()
+    {
+        return true;
     }
 
 protected:
@@ -114,7 +133,8 @@ protected:
 class VideoGenerator : public MacroFrameGenerator
 {
 public:
-    VideoGenerator(std::string macro_path, int macro_height, std::string micro_path, int micro_height)
+    VideoGenerator(std::string macro_path, int macro_height, std::string micro_path, int micro_height, std::string window_name, float fps) :
+        MacroFrameGenerator(window_name, fps)
     {
         storeMicroFrames(micro_path, micro_height);
 
@@ -130,6 +150,11 @@ public:
 
         // initilize the mapped frame;
         instantiateMappedFrame();
+    }
+
+    bool finishedDisplayLoop()
+    {
+        return true;
     }
 
 protected:

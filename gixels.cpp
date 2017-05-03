@@ -16,12 +16,67 @@ using namespace gixels;
 // crop images, don't resize
 // fix ratio on single gixel things
 
+std::shared_ptr<MacroFrameGenerator>
+generatorFromOption(std::string option_path)
+{
+    YAML::Node recipe = YAML::LoadFile(option_path);
+    std::string mode = recipe["mode"].as<std::string>();
+
+    if (mode == "static")
+    {
+        return std::make_shared<StaticGenerator>(
+            recipe["macro_path"].as<std::string>(),
+            recipe["macro_height"].as<int>(),
+            recipe["micro_path"].as<std::string>(),
+            recipe["micro_height"].as<int>(),
+            recipe["macro_path"].as<std::string>(),
+            recipe["fps"].as<float>()
+        );
+    }
+    else if (mode == "gif")
+    {
+        return std::make_shared<GifGenerator>(
+            recipe["macro_path"].as<std::string>(),
+            recipe["macro_height"].as<int>(),
+            recipe["micro_path"].as<std::string>(),
+            recipe["micro_height"].as<int>(),
+            recipe["macro_path"].as<std::string>(),
+            recipe["fps"].as<float>()
+        );
+    }
+    else if (mode == "mirror")
+    {
+        return std::make_shared<CamGenerator>(
+            recipe["cam_number"].as<int>(),
+            recipe["macro_height"].as<int>(),
+            recipe["micro_path"].as<std::string>(),
+            recipe["micro_height"].as<int>(),
+            recipe["macro_path"].as<std::string>(),
+            recipe["fps"].as<float>()
+        );
+    }
+    else if (mode == "video")
+    {
+        
+        return std::make_shared<VideoGenerator>(
+            recipe["macro_path"].as<std::string>(),
+            recipe["macro_height"].as<int>(),
+            recipe["micro_path"].as<std::string>(),
+            recipe["micro_height"].as<int>(),
+            recipe["macro_path"].as<std::string>(),
+            recipe["fps"].as<float>()
+        );
+    }
+    else
+    {
+        std::cerr << "unrecognized mode " << mode << std::endl;
+        return NULL;
+    }
+}
+
 int main( int argc, char** argv )
 {
     std::string recipe_path(argv[1]);
-    YAML::Node recipe = YAML::LoadFile(recipe_path);
-
-    std::string mode = recipe["mode"].as<std::string>();
 
     std::string filename;
     bool save = argc > 2;
@@ -30,71 +85,48 @@ int main( int argc, char** argv )
         filename = std::string(argv[2]);
     }
 
-    if (mode == "static")
-    {
+    std::vector<std::string> options = {
+        "resources/recipes/eyes.yaml",
+        "resources/recipes/gifman.yaml",
+        "resources/recipes/geodude.yaml",
+    };
 
-        StaticGenerator gen(recipe["macro_path"].as<std::string>(),
-                            recipe["macro_height"].as<int>(),
-                            recipe["micro_path"].as<std::string>(),
-                            recipe["micro_height"].as<int>());
-        if (!save)
-        {
-            gen.loop("static", recipe["fps"].as<float>());
-        }
-        else
-        {
-            gen.loopSave(filename, recipe["fps"].as<float>());
-        }
-    }
-    else if (mode == "gif")
+    int map[255];
+    for (int i = 0; i < 255; i++)
     {
-        GifGenerator gen(recipe["macro_path"].as<std::string>(),
-                         recipe["macro_height"].as<int>(),
-                         recipe["micro_path"].as<std::string>(),
-                         recipe["micro_height"].as<int>());
-        if (!save)
-        {
-            gen.loop("animated geoff", recipe["fps"].as<float>());
-        }
-        else
-        {
-            gen.loopSave(filename, recipe["fps"].as<float>());
-        }
+        map[i] = 0;
     }
-    else if (mode == "mirror")
-    {
-        CamGenerator gen(recipe["cam_number"].as<int>(),
-                         recipe["macro_height"].as<int>(),
-                         recipe["micro_path"].as<std::string>(),
-                         recipe["micro_height"].as<int>());
-        if (!save)
-        {
-            gen.loop("mirror", recipe["fps"].as<float>());
-        }
-        else
-        {
-            gen.loopSave(filename, recipe["fps"].as<float>());
-        }
+    map[100] = 0;
+    map[101] = 1;
+    map[102] = 2;
+
+
+    std::vector<std::shared_ptr<MacroFrameGenerator>> gens;
+    for (std::string& option : options) {
+        gens.push_back(generatorFromOption(option));
     }
-    else if (mode == "video")
+
+    size_t index = 0;
+
+    int i = 0;
+
+    namedWindow("window_name", CV_WINDOW_NORMAL);
+    setWindowProperty("window_name", CV_WND_PROP_FULLSCREEN, CV_WINDOW_FULLSCREEN);
+
+    std::shared_ptr<Mat> display;
+
+    while (true) 
     {
-        VideoGenerator gen(recipe["macro_path"].as<std::string>(),
-                           recipe["macro_height"].as<int>(),
-                           recipe["micro_path"].as<std::string>(),
-                           recipe["micro_height"].as<int>());
-        if (!save)
+        display = gens[i]->getCachedFrame();
+
+        imshow("window_name", *display);
+
+        int key = gens[i]->timedSleepResponsive();
+
+        if (key != 255)
         {
-            gen.loop(recipe["macro_path"].as<std::string>(), recipe["fps"].as<float>());
+            i = map[key];
         }
-        else
-        {
-            gen.loopSave(filename, recipe["fps"].as<float>());
-        }
-    }
-    else
-    {
-        std::cerr << "unrecognized mode " << mode << std::endl;
-        return 1;
     }
 
     return 0;

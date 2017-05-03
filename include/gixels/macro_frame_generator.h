@@ -25,33 +25,64 @@ enum MACRO_FRAME_TYPE
 class MacroFrameGenerator
 {
 public:
-    MacroFrameGenerator(){}
+    MacroFrameGenerator(std::string window_name_, float fps_) :
+        window_name(window_name_),
+        fps(fps_)
+    {}
 
-    void loopSave(std::string file_name, float fps)
-    {
-        VideoWriter writer(file_name, CV_FOURCC('W', 'M', 'V', '2'), fps, current_mapped_frame->size(), true);
-        MatPtr frame_hsv;
-        Mat frame;
-        bool done = false;
-        namedWindow(file_name, CV_WINDOW_NORMAL);
-        while (!done)
-        {
-            frame_hsv = getMappedFrame(done);
-            cvtColor(*frame_hsv, frame, CV_HSV2BGR);
-            setWindowProperty(file_name, CV_WND_PROP_FULLSCREEN, CV_WINDOW_FULLSCREEN);
-            imshow(file_name, frame);
-            timedSleep(fps);
-            writer.write(frame);
-        }
-    }
-
-    void loop(std::string window_name, float fps)
+    void fillCachedFrames()
     {
         MatPtr frame_hsv;
         Mat frame, frame_scaled;
-        namedWindow(window_name, CV_WINDOW_NORMAL);
-        int out_height = 720;
-        int out_width = 1280;
+        int out_height = 1050;
+        int out_width = 1680;
+        float output_aspect = float(out_width)/float(out_height);
+        while (!finishedDisplayLoop())
+        {
+            Mat output = Mat(out_height, out_width, CV_8UC3, Scalar(0,0,0));
+            frame_hsv = getMappedFrame();
+            cvtColor(*frame_hsv, frame, CV_HSV2BGR);
+
+            float frame_height = frame.size().height;
+            float frame_width = frame.size().width;
+            float frame_aspect = frame_width/frame_height;
+
+            if (frame_aspect < output_aspect)
+            {
+                int scale_width = int(frame_aspect*out_height);
+                resize(frame, frame_scaled, Size(scale_width, out_height));
+                frame_scaled.copyTo(output(Rect(out_width/2-scale_width/2, 0, scale_width, out_height)));
+            }
+            else
+            {
+                int scale_height = int(out_width/frame_aspect);
+                resize(frame, frame_scaled, Size(out_width, scale_height));
+                frame_scaled.copyTo(output(Rect(0, out_height/2-scale_height/2, out_width, scale_height)));
+            }
+
+            cached_frames.push_back(std::make_shared<Mat>(output));
+        }
+    }
+
+    std::shared_ptr<Mat> getCachedFrame()
+    {
+        static int loop_number = 0;
+
+        loop_number++;
+        if (loop_number >= cached_frames.size())
+        {
+            loop_number = 0;
+        }
+
+        return cached_frames[loop_number];
+    }
+
+    int loop()
+    {
+        MatPtr frame_hsv;
+        Mat frame, frame_scaled;
+        int out_height = 1050;
+        int out_width = 1680;
         float output_aspect = float(out_width)/float(out_height);
         Mat output(out_height, out_width, CV_8UC3, Scalar(0,0,0));
         while (true)
@@ -76,10 +107,22 @@ public:
                 frame_scaled.copyTo(output(Rect(0, out_height/2-scale_height/2, out_width, scale_height)));
             }
 
-            imshow(window_name, output);
-            setWindowProperty(window_name, CV_WND_PROP_FULLSCREEN, CV_WINDOW_FULLSCREEN);
-            timedSleep(fps);
+            imshow("window_name", output);
+            int key_pressed = timedSleepResponsive();
+
+            if (key_pressed != 255)
+            {
+                return key_pressed;
+            }
         }
+    }
+
+    int timedSleepResponsive()
+    {
+        int wait = std::max(1, int(1000*(1/fps - secondsSinceRelease())));
+        int key = waitKey(wait);
+        last_call = Clock::now();
+        return key;
     }
 
 protected:
@@ -107,9 +150,8 @@ protected:
 
     void timedSleep(float fps)
     {
-
         int wait = std::max(1, int(1000*(1/fps - secondsSinceRelease())));
-        waitKey(wait);
+        int key = waitKey(wait);
         last_call = Clock::now();
     }
 
@@ -129,14 +171,17 @@ protected:
                          macro_size.height*micro_size.height);
         current_mapped_frame = std::make_shared<Mat>(mapped_size, CV_8UC3);
         last_call = Clock::now();
+
+        fillCachedFrames();
     }
 
     void incrementMicroIndex()
     {
-        micro_index++;
+        micro_index+=3;
     }
 
     virtual void setMacroFrame() = 0; // get macro frame that is greyscale
+    virtual bool finishedDisplayLoop() = 0;
 
     void storeMicroFrames(std::string micro_path, int micro_height)
     {
@@ -149,9 +194,14 @@ protected:
     MatPtr current_macro_frame; // hsv
     Size macro_size;
 
+    std::vector<std::shared_ptr<Mat>> cached_frames;
+
     GixelCacher gixel_cacher; // hsv
     Size micro_size;
     uint micro_index = 0;
+
+    std::string window_name;
+    float fps;
 
     std::chrono::time_point<std::chrono::high_resolution_clock> last_call;
 };
