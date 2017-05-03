@@ -104,6 +104,7 @@ int main( int argc, char** argv )
     std::vector<std::shared_ptr<MacroFrameGenerator>> gens;
     for (std::string& option : options) {
         gens.push_back(generatorFromOption(option));
+        std::cout << int(100*gens.size()/options.size()) << "\%" << std::endl;
     }
 
     size_t index = 0;
