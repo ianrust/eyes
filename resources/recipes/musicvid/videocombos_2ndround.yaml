@@ -1,0 +1,46 @@
+mode : "combos"
+
+macro_height : 100
+micro_height : 10
+fps: 30
+duration: 10.0
+
+macros:
+  - mode : "gif"
+    path : "resources/gifs/cubefractal"
+    fps_multiplier: 1.0
+    grey_scale: 1.0
+  - mode : "gif"
+    path : "resources/gifs/3dfractal"
+    fps_multiplier: 1.0
+    grey_scale: 0.5
+  - mode : "gif"
+    path : "resources/gifs/fractalsmoke"
+    fps_multiplier: 0.75
+    grey_scale: 0.5
+  - mode : "gif"
+    path : "resources/gifs/mandelbrot"
+    fps_multiplier: 0.75
+    grey_scale: 5
+  - mode : "gif"
+    path : "resources/gifs/shuttle"
+    fps_multiplier: 0.75
+    grey_scale: 3
+  - mode : "gif"
+    path : "resources/gifs/gridsunset"
+    fps_multiplier: 0.75
+    grey_scale: 3
+  - mode : "gif"
+    path : "resources/gifs/sunset1"
+    fps_multiplier: 0.75
+    grey_scale: 5
+micros:
+  - "resources/gifs/explode"
+  - "resources/gifs/bloom1"
+  - "resources/gifs/lightbulb"
+  - "resources/gifs/geomflower"
+  - "resources/gifs/wave"
+  - "resources/gifs/swirl"
+  - "resources/remosaicsartwork"
+  - "resources/gifs/face2"
+  - "resources/gifs/smoke1"

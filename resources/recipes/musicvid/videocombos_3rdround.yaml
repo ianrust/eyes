@@ -1,0 +1,42 @@
+mode : "combos"
+
+macro_height : 100
+micro_height : 10
+fps: 30
+duration: 10.0
+
+macros:
+  - mode : "gif"
+    path : "resources/gifs/sunset"
+    fps_multiplier: 1.0
+    grey_scale: 1.0
+  - mode : "gif"
+    path : "resources/gifs/jelly"
+    fps_multiplier: 0.75
+    grey_scale: 3
+  - mode : "gif"
+    path : "resources/gifs/water"
+    fps_multiplier: 1.0
+    grey_scale: 1.0
+  - mode : "gif"
+    path : "resources/gifs/shroom"
+    fps_multiplier: 0.6
+    grey_scale: 1.0
+  - mode : "gif"
+    path : "resources/gifs/lake"
+    fps_multiplier: 0.5
+    grey_scale: 2
+  - mode : "gif"
+    path : "resources/gifs/electric"
+    fps_multiplier: 0.4
+    grey_scale: 2
+micros:
+  - "resources/gifs/explode"
+  - "resources/gifs/bloom1"
+  - "resources/gifs/lightbulb"
+  - "resources/gifs/geomflower"
+  - "resources/gifs/wave"
+  - "resources/gifs/swirl"
+  - "resources/remosaicsartwork"
+  - "resources/gifs/face2"
+  - "resources/gifs/smoke1"

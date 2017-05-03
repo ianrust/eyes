@@ -27,7 +27,7 @@ class MacroFrameGenerator
 public:
     MacroFrameGenerator(){}
 
-    void loopSave(VideoWriter& writer, std::string file_name, float fps, float duration)
+    void loopSave(VideoWriter& writer, float fps, float duration)
     {
         MatPtr frame_hsv;
         Mat frame, frame_scaled;
@@ -166,10 +166,10 @@ protected:
 
     virtual void setMacroFrame() = 0; // get macro frame that is greyscale
 
-    void storeMicroFrames(std::string micro_path, int micro_height)
+    void storeMicroFrames(std::string micro_path, int micro_height, float grey_scale_)
     {
         micro_size = Size(micro_height, micro_height);
-        gixel_cacher = GixelCacher(micro_path, micro_size);
+        gixel_cacher = GixelCacher(micro_path, micro_size, grey_scale_);
     }
 
     MatPtr current_mapped_frame; // hsv

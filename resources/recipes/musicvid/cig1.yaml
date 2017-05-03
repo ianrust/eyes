@@ -1,0 +1,9 @@
+mode : "gif"
+
+macro_path : "resources/gifs/cig"
+macro_height : 100
+micro_path : "resources/gifs/lightbulb"
+micro_height : 20
+fps: 30
+fps_multiplier: 0.5
+duration: 5.0

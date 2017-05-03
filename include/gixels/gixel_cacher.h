@@ -17,7 +17,7 @@ typedef std::shared_ptr<Mat> MatPtr;
 class Gixel
 {
 public:
-    Gixel(const path& p, Size micro_size, bool square)
+    Gixel(const path& p, Size micro_size, bool square, float grey_scale_)
     {
         std::vector<path> v;
         std::copy(directory_iterator(p), directory_iterator(), back_inserter(v));
@@ -34,6 +34,8 @@ public:
         }
 
         storeRepresentativeHue();
+
+        grey_scale = grey_scale_;
     }
     
     void fillPixel(MatPtr& current_mapped_frame,
@@ -87,7 +89,7 @@ private:
 
     uint getMicroIndex(const MatPtr& current_macro_frame, uint micro_index, uint i, uint j)
     {
-        float spread = frames.size()/2;
+        float spread = frames.size()*grey_scale;
         float val = current_macro_frame->at<Vec3b>(j,i)(2);
         int shader = int(val/float(256.0/spread)); // rel value, max of spread, min of 0
         uint index = (shader + micro_index) % frames.size();
@@ -122,6 +124,7 @@ private:
 
     std::vector<Mat> frames;
     float representative_hue;
+    float grey_scale;
 };
 
 typedef std::shared_ptr<Gixel> GixelPtr;
@@ -135,7 +138,7 @@ class GixelCacher
 {
 public:
     GixelCacher(){}
-    GixelCacher(std::string p, Size micro_size)
+    GixelCacher(std::string p, Size micro_size, float grey_scale_)
     {
         // go through the directory and find all folders, then add those folders as a Gixel
         std::vector<GixelPtr> loaded_gixels;
@@ -148,7 +151,7 @@ public:
         {
             if (is_directory(itr->status()))
             {
-                GixelPtr new_gixel(new Gixel(itr->path(), micro_size, true));
+                GixelPtr new_gixel(new Gixel(itr->path(), micro_size, true, grey_scale_));
                 loaded_gixels.push_back(new_gixel);
                 found_subs = true;
             }
@@ -156,7 +159,7 @@ public:
         // just fill with the path if there is only a directory of frames being pointed to
         if (!found_subs)
         {
-            GixelPtr new_gixel(new Gixel(gixel_dir, micro_size, true));
+            GixelPtr new_gixel(new Gixel(gixel_dir, micro_size, true, grey_scale_));
             loaded_gixels.push_back(new_gixel);
         }
 

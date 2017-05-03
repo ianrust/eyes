@@ -1,0 +1,9 @@
+mode : "gif"
+macro_path : "resources/gifs/electric"
+fps_multiplier: 0.4
+grey_scale: 2
+macro_height : 100
+micro_path : "resources/gifs/smoke1"
+micro_height : 5
+fps: 30
+duration: 5.0

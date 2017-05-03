@@ -1,0 +1,132 @@
+mode : "combos"
+
+macro_height : 100
+micro_height : 10
+fps: 30
+duration: 10.0
+
+macros:
+  - mode: "gif"
+    path: "resources/gifs/cig"
+    fps_multiplier: 0.5
+  - mode: "gif"
+    path: "resources/gifs/whispflower"
+    fps_multiplier: 0.5
+  - mode : "gif"
+    path : "resources/gifs/smoketriangle"
+    fps_multiplier: 0.25
+  - mode : "gif"
+    path : "resources/gifs/skullsmoke"
+    fps_multiplier: 0.25
+    grey_scale: 0.6
+  - mode : "gif"
+    path : "resources/gifs/skullexplode"
+    fps_multiplier: 0.7
+    grey_scale: 2
+  - mode : "gif"
+    path : "resources/gifs/skeleton"
+    fps_multiplier: 0.7
+    grey_scale: 1
+  - mode : "gif"
+    path : "resources/gifs/run"
+    fps_multiplier: 0.4
+    grey_scale: 3
+  - mode : "gif"
+    path : "resources/gifs/puff"
+    fps_multiplier: 0.5
+    grey_scale: 3
+  - mode : "gif"
+    path : "resources/gifs/pourskull"
+    fps_multiplier: 2
+    grey_scale: 1
+  - mode : "gif"
+    path : "resources/gifs/orbit"
+    fps_multiplier: 1
+    grey_scale: 2
+  - mode : "gif"
+    path : "resources/gifs/muppet"
+    fps_multiplier: 0.25
+    grey_scale: 1
+  - mode : "gif"
+    path : "resources/gifs/mouthsmoke1"
+    fps_multiplier: 0.25
+    grey_scale: 2
+  - mode : "gif"
+    path : "resources/gifs/mouthsmoke"
+    fps_multiplier: 0.1
+    grey_scale: 0.8
+  - mode : "gif"
+    path : "resources/gifs/monk"
+    fps_multiplier: 0.3
+    grey_scale: 1
+  - mode : "gif"
+    path : "resources/gifs/meteor"
+    fps_multiplier: 0.3
+    grey_scale: 0.5
+  - mode : "gif"
+    path : "resources/gifs/longtrail"
+    fps_multiplier: 0.6
+    grey_scale: 2
+  - mode : "gif"
+    path : "resources/gifs/layersmoke"
+    fps_multiplier: 1
+    grey_scale: 1
+  - mode : "gif"
+    path : "resources/gifs/hinden2"
+    fps_multiplier: 1
+    grey_scale: 3
+  - mode : "gif"
+    path : "resources/gifs/headsmoke"
+    fps_multiplier: 0.5
+    grey_scale: 1
+  - mode : "gif"
+    path : "resources/gifs/geomflower"
+    fps_multiplier: 0.5
+    grey_scale: 1
+  - mode : "gif"
+    path : "resources/gifs/explode"
+    fps_multiplier: 2
+    grey_scale: 2
+  - mode : "gif"
+    path : "resources/gifs/esplode"
+    fps_multiplier: 0.3
+    grey_scale: 1.0
+  - mode : "gif"
+    path : "resources/gifs/comet"
+    fps_multiplier: 0.5
+    grey_scale: 2.0
+  - mode : "gif"
+    path : "resources/gifs/burningman"
+    fps_multiplier: 0.5
+    grey_scale: 0.5
+  - mode : "gif"
+    path : "resources/gifs/bloom1"
+    fps_multiplier: 0.5
+    grey_scale: 1
+  - mode : "gif"
+    path : "resources/gifs/bloom"
+    fps_multiplier: 0.5
+    grey_scale: 2
+  - mode : "gif"
+    path : "resources/gifs/wave"
+    fps_multiplier: 0.5
+    grey_scale: 2
+  - mode : "static"
+    path : "resources/gifs/eye/eye000.png"
+    fps_multiplier: 0.533
+    grey_scale: 0.5
+  - mode : "gif"
+    path : "resources/gifs/eye"
+    fps_multiplier: 0.533
+    grey_scale: 0.5
+micros:
+  - "resources/gifs/explode"
+  - "resources/gifs/bloom1"
+  - "resources/gifs/lightbulb"
+  - "resources/gifs/geomflower"
+  - "resources/gifs/eye"
+  - "resources/gifs/fastpaint"
+  - "resources/gifs/wave"
+  - "resources/gifs/swirl"
+  - "resources/remosaicsartwork"
+  - "resources/gifs/face2"

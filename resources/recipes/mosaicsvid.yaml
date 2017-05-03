@@ -10,81 +10,252 @@ sections:
     micro_path : "resources/remosaicsartwork"
     micro_height : 1920
     duration: 0.75
+    fps_multiplier: 0.533
+  - mode : "static"
+    macro_path : "resources/gifs/eye/eye000.png"
+    macro_height : 1
+    micro_path : "resources/remosaicsartwork"
+    micro_height : 1920
+    duration: 0.75
+    fps_multiplier: 0.533
   - mode : "static"
     macro_path : "resources/gifs/eye/eye000.png"
     macro_height : 4
     micro_path : "resources/remosaicsartwork"
     micro_height : 480
     duration: 0.75
+    fps_multiplier: 0.533
   - mode : "static"
     macro_path : "resources/gifs/eye/eye000.png"
     macro_height : 16
     micro_path : "resources/remosaicsartwork"
     micro_height : 120
     duration: 0.75
+    fps_multiplier: 0.533
   - mode : "static"
     macro_path : "resources/gifs/eye/eye000.png"
     macro_height : 64
     micro_path : "resources/remosaicsartwork"
     micro_height : 30
     duration: 0.75
+    fps_multiplier: 0.533
   - mode : "static"
     macro_path : "resources/gifs/eye/eye000.png"
     macro_height : 256
-    micro_path : "resources/gifs/hexwater"
+    micro_path : "resources/remosaicsartwork"
     micro_height : 8
     duration: 0.75
+    fps_multiplier: 0.533
   - mode : "gif"
     macro_path : "resources/gifs/eye"
-    macro_height : 256
+    macro_height : 100
     micro_path : "resources/gifs/smoke1"
-    micro_height : 8
-    fps: 30
+    micro_height : 40
     fps_multiplier: 0.533
-    duration: 2.0
+    duration: 5.0
   - mode : "gif"
     macro_path : "resources/gifs/nazi"
     macro_height : 80
     micro_path : "resources/gifs/face2"
-    micro_height : 20
-    fps: 30
+    micro_height : 40
     fps_multiplier: 0.9
-    duration: 2.0
-  - mode : "static"
-    macro_path : "resources/gifs/eye/eye000.png"
-    macro_height : 64
-    micro_path : "resources/remosaicsartwork"
-    micro_height : 30
-    duration: 0.1
-    duration: 2.0
-  - mode : "static"
-    macro_path : "resources/gifs/eye/eye000.png"
-    macro_height : 256
-    micro_path : "resources/gifs/hexwater"
-    micro_height : 8
-    duration: 0.1
-    duration: 2.0
+    duration: 5.0
   - mode : "gif"
-    macro_path : "resources/gifs/eye"
-    macro_height : 256
-    micro_path : "resources/gifs/smoke1"
-    micro_height : 8
-    fps_multiplier: 0.533
-    duration: 0.1
-  - mode : "gif"
-    macro_path : "resources/gifs/nazi"
+    macro_path : "resources/gifs/face1"
     macro_height : 80
     micro_path : "resources/gifs/face2"
     micro_height : 20
     fps_multiplier: 0.9
-    duration: 0.1
+    duration: 5.0
+  - mode : "gif"
+    macro_path : "resources/gifs/skull"
+    macro_height : 80
+    micro_path : "resources/gifs/face2"
+    micro_height : 20
+    fps_multiplier: 0.9
+    duration: 5.0
   - mode : "gif"
     macro_path : "resources/gifs/cycle"
     macro_height : 100
     micro_path : "resources/gifs/smoke1"
     micro_height : 10
+    duration: 5.0
+  - mode : "gif"
+    macro_path : "resources/gifs/geom"
+    macro_height : 100
+    micro_path : "resources/gifs/smoke1"
+    micro_height : 10
+    duration: 5.0
+  - mode : "gif"
+    macro_path : "resources/gifs/cube"
+    macro_height : 100
+    micro_path : "resources/gifs/smoke1"
+    micro_height : 10
+    duration: 5.0
+  - mode : "gif"
+    macro_path : "resources/gifs/eye"
+    macro_height : 100
+    micro_path : "resources/gifs/smoke1"
+    micro_height : 10
+    duration: 5.0
+  - mode : "gif"
+    macro_path : "resources/gifs/body"
+    macro_height : 80
+    micro_path : "resources/gifs/eye"
+    micro_height : 100
+    duration: 5.0
   - mode : "gif"
     macro_path : "resources/gifs/body"
     macro_height : 100
     micro_path : "resources/gifs/smoke1"
     micro_height : 10
+    duration: 5.0
+  - mode : "gif"
+    macro_path : "resources/gifs/eye"
+    macro_height : 100
+    micro_path : "resources/gifs/fastpaint"
+    micro_height : 40
+    fps_multiplier: 0.533
+    duration: 5.0
+  - mode : "gif"
+    macro_path : "resources/gifs/eye"
+    macro_height : 40
+    micro_path : "resources/gifs/wave"
+    micro_height : 100
+    fps_multiplier: 0.533
+    duration: 5.0
+    # circular things
+  - mode : "gif"
+    macro_path : "resources/gifs/hexwater"
+    macro_height : 140
+    micro_path : "resources/gifs/swirl"
+    micro_height : 30
+    duration: 5.0
+    fps_multiplier: 0.1
+  - mode : "gif"
+    macro_path : "resources/gifs/energy"
+    macro_height : 140
+    micro_path : "resources/gifs/swirl"
+    micro_height : 30
+    duration: 5.0
+    fps_multiplier: 0.1
+  - mode : "gif"
+    macro_path : "resources/gifs/crystal"
+    macro_height : 140
+    micro_path : "resources/gifs/swirl"
+    micro_height : 30
+    duration: 5.0
+    fps_multiplier: 0.1
+  - mode : "gif"
+    macro_path : "resources/gifs/mithril"
+    macro_height : 140
+    micro_path : "resources/gifs/swirl"
+    micro_height : 30
+    duration: 5.0
+    fps_multiplier: 0.1
+  - mode : "gif"
+    macro_path : "resources/gifs/heart"
+    macro_height : 140
+    micro_path : "resources/gifs/swirl"
+    micro_height : 30
+    duration: 5.0
+    fps_multiplier: 0.1
+  - mode : "gif"
+    macro_path : "resources/gifs/hexwater"
+    macro_height : 140
+    micro_path : "resources/gifs/geom"
+    micro_height : 30
+    duration: 5.0
+    fps_multiplier: 0.1
+  - mode : "gif"
+    macro_path : "resources/gifs/energy"
+    macro_height : 140
+    micro_path : "resources/gifs/geom"
+    micro_height : 30
+    duration: 5.0
+    fps_multiplier: 0.1
+  - mode : "gif"
+    macro_path : "resources/gifs/crystal"
+    macro_height : 140
+    micro_path : "resources/gifs/geom"
+    micro_height : 30
+    duration: 5.0
+    fps_multiplier: 0.1
+  - mode : "gif"
+    macro_path : "resources/gifs/mithril"
+    macro_height : 140
+    micro_path : "resources/gifs/geom"
+    micro_height : 30
+    duration: 5.0
+    fps_multiplier: 0.1
+  - mode : "gif"
+    macro_path : "resources/gifs/heart"
+    macro_height : 140
+    micro_path : "resources/gifs/geom"
+    micro_height : 30
+    duration: 5.0
+    fps_multiplier: 0.1
+  - mode : "gif"
+    macro_path : "resources/gifs/hexwater"
+    macro_height : 140
+    micro_path : "resources/gifs/eye"
+    micro_height : 30
+    duration: 5.0
+    fps_multiplier: 0.1
+  - mode : "gif"
+    macro_path : "resources/gifs/energy"
+    macro_height : 140
+    micro_path : "resources/gifs/eye"
+    micro_height : 30
+    duration: 5.0
+    fps_multiplier: 0.1
+  - mode : "gif"
+    macro_path : "resources/gifs/crystal"
+    macro_height : 140
+    micro_path : "resources/gifs/eye"
+    micro_height : 30
+    duration: 5.0
+    fps_multiplier: 0.1
+  - mode : "gif"
+    macro_path : "resources/gifs/mithril"
+    macro_height : 140
+    micro_path : "resources/gifs/eye"
+    micro_height : 30
+    duration: 5.0
+    fps_multiplier: 0.1
+  - mode : "gif"
+    macro_path : "resources/gifs/heart"
+    macro_height : 140
+    micro_path : "resources/gifs/eye"
+    micro_height : 30
+    duration: 5.0
+    fps_multiplier: 0.1
+    # running
+  - mode : "gif"
+    macro_path : "resources/gifs/curvetube"
+    macro_height : 140
+    micro_path : "resources/gifs/swirl"
+    micro_height : 30
+    duration: 5.0
+    fps_multiplier: 0.1
+  - mode : "gif"
+    macro_path : "resources/gifs/kaleidescope"
+    macro_height : 140
+    micro_path : "resources/gifs/swirl"
+    micro_height : 30
+    duration: 5.0
+    fps_multiplier: 0.1
+  - mode : "gif"
+    macro_path : "resources/gifs/swirl"
+    macro_height : 140
+    micro_path : "resources/gifs/swirl"
+    micro_height : 30
+    duration: 5.0
+    fps_multiplier: 0.1
+    # outro
+  - mode : "gif"
+    macro_path : "resources/gifs/wave"
+    macro_height : 100
+    micro_path : "resources/gifs/wave"
+    micro_height : 30
+    duration: 5.0

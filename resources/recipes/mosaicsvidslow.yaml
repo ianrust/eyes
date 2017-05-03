@@ -1,0 +1,12 @@
+mode : "sequence"
+fps: 10
+
+# intro kicks
+
+sections:
+  - mode : "static"
+    macro_path : "resources/gifs/eye/eye000.png"
+    macro_height : 1
+    micro_path : "resources/remosaicsartwork"
+    micro_height : 1920
+    duration: 0.75

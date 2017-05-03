@@ -8,9 +8,9 @@ namespace gixels
 class StaticGenerator : public MacroFrameGenerator
 {
 public:
-    StaticGenerator(std::string macro_path, int macro_height, std::string micro_path, int micro_height)
+    StaticGenerator(std::string macro_path, int macro_height, std::string micro_path, int micro_height, float grey_scale_)
     {
-        storeMicroFrames(micro_path, micro_height);
+        storeMicroFrames(micro_path, micro_height, grey_scale_);
 
         Mat frame_static_orig = imread(macro_path, CV_LOAD_IMAGE_COLOR);
         Mat frame_static_orig_hsv;
@@ -36,9 +36,9 @@ protected:
 class GifGenerator : public MacroFrameGenerator
 {
 public:
-    GifGenerator(std::string macro_path, int macro_height, std::string micro_path, int micro_height, float fps_multiplier)
+    GifGenerator(std::string macro_path, int macro_height, std::string micro_path, int micro_height, float fps_multiplier, float grey_scale_)
     {
-        storeMicroFrames(micro_path, micro_height);
+        storeMicroFrames(micro_path, micro_height, grey_scale_);
         _fps_multiplier = fps_multiplier;
 
         path gif_path(macro_path);
@@ -80,9 +80,9 @@ protected:
 class CamGenerator : public MacroFrameGenerator
 {
 public:
-    CamGenerator(int cam_number, int macro_height, std::string micro_path, int micro_height)
+    CamGenerator(int cam_number, int macro_height, std::string micro_path, int micro_height, float grey_scale_)
     {
-        storeMicroFrames(micro_path, micro_height);
+        storeMicroFrames(micro_path, micro_height, grey_scale_);
 
         cam = VideoCapture(cam_number);
         Mat tmp_src;
@@ -116,11 +116,11 @@ protected:
 class VideoGenerator : public MacroFrameGenerator
 {
 public:
-    VideoGenerator(std::string macro_path, int macro_height, std::string micro_path, int micro_height)
+    VideoGenerator(std::string macro_path, int macro_height, std::string micro_path, int micro_height, float grey_scale_)
     {
         namedWindow("window_name", CV_WINDOW_NORMAL);
         std::cout << "b" << std::endl;
-        storeMicroFrames(micro_path, micro_height);
+        storeMicroFrames(micro_path, micro_height, grey_scale_);
         std::cout << "b" << std::endl;
 
         cam = VideoCapture(macro_path);
