@@ -1,0 +1,6 @@
+mode : "gif"
+macro_path : "resources/gifs/mithril"
+macro_height : 140
+micro_path : "resources/gifs/swirl"
+micro_height : 30
+fps: 30

@@ -4,4 +4,4 @@ macro_path : "resources/gifs/eye"
 macro_height : 60
 micro_path : "resources/gifs/eye"
 micro_height : 20
-fps: 100
+fps: 15

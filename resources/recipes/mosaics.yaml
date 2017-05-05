@@ -1,0 +1,7 @@
+mode : "static"
+
+macro_path : "resources/static/mosaics.png"
+macro_height : 50
+micro_path : "resources/gifs/circle"
+micro_height : 20
+fps: 20

@@ -1,0 +1,7 @@
+mode : "static"
+
+macro_path : "resources/static/flower.JPG"
+macro_height : 50
+micro_path : "resources/remosaicsartwork"
+micro_height : 40
+fps: 15

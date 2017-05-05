@@ -1,0 +1,7 @@
+mode : "video"
+
+macro_path : "/Users/ian/Downloads/sample.avi"
+macro_height : 50
+micro_path : "resources/gifs"
+micro_height : 30
+fps: 30

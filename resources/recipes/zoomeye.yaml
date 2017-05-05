@@ -1,0 +1,7 @@
+mode : "gif"
+
+macro_path : "resources/gifs/zoomeye"
+macro_height : 60
+micro_path : "resources/gifs/zoomeye"
+micro_height : 20
+fps: 15

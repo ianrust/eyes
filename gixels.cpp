@@ -87,8 +87,9 @@ int main( int argc, char** argv )
 
     std::vector<std::string> options = {
         "resources/recipes/eyes.yaml",
-        "resources/recipes/gifman.yaml",
+        "resources/recipes/sunbulb.yaml",
         "resources/recipes/geodude.yaml",
+        "resources/recipes/mithrilswirl.yaml",
     };
 
     int map[255];
@@ -99,6 +100,7 @@ int main( int argc, char** argv )
     map[100] = 0;
     map[101] = 1;
     map[102] = 2;
+    map[103] = 3;
 
 
     std::vector<std::shared_ptr<MacroFrameGenerator>> gens;
