@@ -10,11 +10,14 @@ for f in onlyfiles:
     dest = os.path.join(dirpath,name)
     try:
         os.mkdir(dest)
+        command = "convert %s -coalesce %s/%s%%03d.png" % (filename, dest, name)
+        call(command.split())
     except OSError:
-        print "Direcory %s exists, clearing contents" % name
+        print "Directory %s exists, skipping" % name
+        # print "Directory %s exists, clearing contents" % name
 
         command = "rm -rf %s/*" % dest
-        call(command.split())
+        # call(command.split())
         
-    command = "convert %s -coalesce %s/%s%%03d.png" % (filename, dest, name)
-    call(command.split())
+    # command = "convert %s -coalesce %s/%s%%03d.png" % (filename, dest, name)
+    # call(command.split())

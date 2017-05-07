@@ -1,0 +1,7 @@
+mode : "gif"
+macro_path : "resources/gifs/fractalsmoke"
+macro_height : 140
+micro_path : "resources/gifs/smoke1"
+micro_height : 15
+fps: 30
+grey_scale: 2.0

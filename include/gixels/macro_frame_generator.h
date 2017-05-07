@@ -25,9 +25,10 @@ enum MACRO_FRAME_TYPE
 class MacroFrameGenerator
 {
 public:
-    MacroFrameGenerator(std::string window_name_, float fps_) :
+    MacroFrameGenerator(std::string window_name_, float fps_, float grey_scale_) :
         window_name(window_name_),
-        fps(fps_)
+        fps(fps_),
+        grey_scale(grey_scale_)
     {}
 
     void fillCachedFrames()
@@ -85,6 +86,8 @@ public:
         int out_width = 1680;
         float output_aspect = float(out_width)/float(out_height);
         Mat output(out_height, out_width, CV_8UC3, Scalar(0,0,0));
+        namedWindow("window_name", CV_WINDOW_NORMAL);
+        setWindowProperty("window_name", CV_WND_PROP_FULLSCREEN, CV_WINDOW_FULLSCREEN);
         while (true)
         {
             frame_hsv = getMappedFrame();
@@ -112,6 +115,7 @@ public:
 
             if (key_pressed != 255)
             {
+                micro_index = 0;
                 return key_pressed;
             }
         }
@@ -177,16 +181,16 @@ protected:
 
     void incrementMicroIndex()
     {
-        micro_index+=3;
+        micro_index+=1;
     }
 
     virtual void setMacroFrame() = 0; // get macro frame that is greyscale
     virtual bool finishedDisplayLoop() = 0;
 
-    void storeMicroFrames(std::string micro_path, int micro_height)
+    void storeMicroFrames(std::string micro_path, int micro_height, float grey_scale)
     {
         micro_size = Size(micro_height, micro_height);
-        gixel_cacher = GixelCacher(micro_path, micro_size);
+        gixel_cacher = GixelCacher(micro_path, micro_size, grey_scale);
     }
 
     MatPtr current_mapped_frame; // hsv
@@ -202,6 +206,7 @@ protected:
 
     std::string window_name;
     float fps;
+    float grey_scale;
 
     std::chrono::time_point<std::chrono::high_resolution_clock> last_call;
 };

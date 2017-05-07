@@ -1,0 +1,7 @@
+mode : "static"
+macro_path : "resources/static/me_glasses.jpg"
+macro_height : 140
+micro_path : "resources/gifs/smoke1"
+micro_height : 15
+fps: 30
+grey_scale: 5.0

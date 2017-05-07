@@ -1,0 +1,7 @@
+mode : "gif"
+macro_path : "resources/gifs/comet"
+macro_height : 140
+micro_path : "resources/gifs/geom"
+micro_height : 15
+fps: 30
+grey_scale: 2.0

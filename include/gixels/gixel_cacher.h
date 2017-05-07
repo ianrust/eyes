@@ -17,7 +17,8 @@ typedef std::shared_ptr<Mat> MatPtr;
 class Gixel
 {
 public:
-    Gixel(const path& p, Size micro_size, bool square)
+    Gixel(const path& p, Size micro_size, bool square, float grey_scale_) :
+        grey_scale(grey_scale_)
     {
         std::vector<path> v;
         std::copy(directory_iterator(p), directory_iterator(), back_inserter(v));
@@ -87,7 +88,7 @@ private:
 
     uint getMicroIndex(const MatPtr& current_macro_frame, uint micro_index, uint i, uint j)
     {
-        float spread = frames.size()/2;
+        float spread = frames.size()*grey_scale;
         float val = current_macro_frame->at<Vec3b>(j,i)(2);
         int shader = int(val/float(256.0/spread)); // rel value, max of spread, min of 0
         uint index = (shader + micro_index) % frames.size();
@@ -122,6 +123,7 @@ private:
 
     std::vector<Mat> frames;
     float representative_hue;
+    float grey_scale;
 };
 
 typedef std::shared_ptr<Gixel> GixelPtr;
@@ -135,7 +137,7 @@ class GixelCacher
 {
 public:
     GixelCacher(){}
-    GixelCacher(std::string p, Size micro_size)
+    GixelCacher(std::string p, Size micro_size, float grey_scale_)
     {
         // go through the directory and find all folders, then add those folders as a Gixel
         std::vector<GixelPtr> loaded_gixels;
@@ -148,7 +150,7 @@ public:
         {
             if (is_directory(itr->status()))
             {
-                GixelPtr new_gixel(new Gixel(itr->path(), micro_size, true));
+                GixelPtr new_gixel(new Gixel(itr->path(), micro_size, true, grey_scale_));
                 loaded_gixels.push_back(new_gixel);
                 found_subs = true;
             }
@@ -156,7 +158,7 @@ public:
         // just fill with the path if there is only a directory of frames being pointed to
         if (!found_subs)
         {
-            GixelPtr new_gixel(new Gixel(gixel_dir, micro_size, true));
+            GixelPtr new_gixel(new Gixel(gixel_dir, micro_size, true, grey_scale_));
             loaded_gixels.push_back(new_gixel);
         }
 
@@ -169,6 +171,8 @@ public:
             GixelPtr closest_gixel;
             float least_hue_dist = -1;
             std::vector<GixelPtr> coincident_gixels;
+            int closest_index = 0;
+            int index = 0;
             for (GixelPtr g : loaded_gixels)
             {
                 float distance = g->distanceFromHue(float(h));
@@ -177,12 +181,20 @@ public:
                 {
                     gixels[h] = g;
                     least_hue_dist = distance;
+                    closest_index = index;
                 }
+                index++;
+            }
 
-                if (distance < 1.0)
+            index = 0;
+            for (GixelPtr g : loaded_gixels)
+            {
+                float distance = g->distanceFromHue(float(h));
+                if (distance < 1 && index != closest_index)
                 {
                     coincident_gixels.push_back(g);
                 }
+                index++;
             }
 
             for (GixelPtr c_g : coincident_gixels)
@@ -199,7 +211,7 @@ public:
             for (uint j = 0; j < macro_frame->size().height; j++)
             {
                 // find the micro frame with the closest distance to the macro frame in voronoi region
-                int hue_index = round((int(macro_frame->at<Vec3b>(j,i)(0))%180)*2);
+                int hue_index = round((int(macro_frame->at<Vec3b>(j,i)(micro_index))%180)*2);
                 hue_index = (hue_index + micro_index) % 360;
                 GixelPtr closest_gixel = gixels[hue_index];
 

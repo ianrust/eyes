@@ -1,0 +1,7 @@
+mode : "gif"
+macro_path : "resources/gifs/cubefractal"
+macro_height : 140
+micro_path : "resources/gifs/wave"
+micro_height : 15
+fps: 30
+grey_scale: 2.0

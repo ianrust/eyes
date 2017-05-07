@@ -1,0 +1,7 @@
+mode : "gif"
+macro_path : "resources/gifs/3dfractal"
+macro_height : 200
+micro_path : "resources/gifs/geomflower"
+micro_height : 10
+fps: 30
+grey_scale: 0.4

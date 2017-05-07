@@ -8,10 +8,10 @@ namespace gixels
 class StaticGenerator : public MacroFrameGenerator
 {
 public:
-    StaticGenerator(std::string macro_path, int macro_height, std::string micro_path, int micro_height, std::string window_name, float fps) :
-        MacroFrameGenerator(window_name, fps)
+    StaticGenerator(std::string macro_path, int macro_height, std::string micro_path, int micro_height, std::string window_name, float fps, float grey_scale) :
+        MacroFrameGenerator(window_name, fps, grey_scale)
     {
-        storeMicroFrames(micro_path, micro_height);
+        storeMicroFrames(micro_path, micro_height, grey_scale);
 
         Mat frame_static_orig = imread(macro_path, CV_LOAD_IMAGE_COLOR);
         Mat frame_static_orig_hsv;
@@ -28,8 +28,8 @@ public:
 
     bool finishedDisplayLoop()
     {
-
-        return (((micro_index % 360) <= 3) && (micro_index > 3));
+        return micro_index > 300;
+        // return (((micro_index % 360) <= 3) && (micro_index > 3));
     }
 
 protected:
@@ -43,10 +43,10 @@ protected:
 class GifGenerator : public MacroFrameGenerator
 {
 public:
-    GifGenerator(std::string macro_path, int macro_height, std::string micro_path, int micro_height, std::string window_name, float fps) :
-        MacroFrameGenerator(window_name, fps)
+    GifGenerator(std::string macro_path, int macro_height, std::string micro_path, int micro_height, std::string window_name, float fps, float grey_scale) :
+        MacroFrameGenerator(window_name, fps, grey_scale)
     {
-        storeMicroFrames(micro_path, micro_height);
+        storeMicroFrames(micro_path, micro_height, grey_scale);
 
         path gif_path(macro_path);
         std::vector<path> v;
@@ -74,7 +74,8 @@ public:
 
     bool finishedDisplayLoop()
     {
-        return (((micro_index % 360) <= 3) && ((micro_index % macro_frames.size()) <= 3) && (micro_index > 3));
+        return micro_index > 30;
+        // return (((micro_index % 360) <= 3) && ((micro_index % macro_frames.size()) <= 3) && (micro_index > 3));
     }
 
 protected:
@@ -91,10 +92,10 @@ protected:
 class CamGenerator : public MacroFrameGenerator
 {
 public:
-    CamGenerator(int cam_number, int macro_height, std::string micro_path, int micro_height, std::string window_name, float fps) :
-        MacroFrameGenerator(window_name, fps)
+    CamGenerator(int cam_number, int macro_height, std::string micro_path, int micro_height, std::string window_name, float fps, float grey_scale) :
+        MacroFrameGenerator(window_name, fps, grey_scale)
     {
-        storeMicroFrames(micro_path, micro_height);
+        storeMicroFrames(micro_path, micro_height, grey_scale);
 
         cam = VideoCapture(cam_number);
         Mat tmp_src;
@@ -133,10 +134,10 @@ protected:
 class VideoGenerator : public MacroFrameGenerator
 {
 public:
-    VideoGenerator(std::string macro_path, int macro_height, std::string micro_path, int micro_height, std::string window_name, float fps) :
-        MacroFrameGenerator(window_name, fps)
+    VideoGenerator(std::string macro_path, int macro_height, std::string micro_path, int micro_height, std::string window_name, float fps, float grey_scale) :
+        MacroFrameGenerator(window_name, fps, grey_scale)
     {
-        storeMicroFrames(micro_path, micro_height);
+        storeMicroFrames(micro_path, micro_height, grey_scale);
 
         cam = VideoCapture(macro_path);
         Mat tmp_src;

@@ -1,0 +1,7 @@
+mode : "gif"
+macro_path : "resources/gifs/shuttle"
+macro_height : 200
+micro_path : "resources/gifs/geom"
+micro_height : 5
+fps: 30
+grey_scale: 0.75
