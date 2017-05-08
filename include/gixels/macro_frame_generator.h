@@ -78,10 +78,10 @@ public:
         return cached_frames[loop_number];
     }
 
-    int loop()
+    int loop(bool color_shift)
     {
         MatPtr frame_hsv;
-        Mat frame, frame_scaled;
+        Mat frame, frame_scaled, frame_rotated;
         int out_height = 1050;
         int out_width = 1680;
         float output_aspect = float(out_width)/float(out_height);
@@ -91,7 +91,15 @@ public:
         while (true)
         {
             frame_hsv = getMappedFrame();
-            cvtColor(*frame_hsv, frame, CV_HSV2BGR);
+            if (color_shift)
+            {
+                frame_rotated = *frame_hsv + Scalar((micro_index*4)%255,(micro_index*6)%255,0);
+                cvtColor(frame_rotated, frame, CV_HSV2BGR);
+            }
+            else
+            {
+                cvtColor(*frame_hsv, frame, CV_HSV2BGR);
+            }
 
             float frame_height = frame.size().height;
             float frame_width = frame.size().width;

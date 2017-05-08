@@ -87,18 +87,26 @@ struct KeyMap
 {
     std::string recipe_path;
     char key;
-    KeyMap(std::string recipe_path_, char key_) :
+    char alt_key;
+    KeyMap(std::string recipe_path_, char key_, char alt_key_) :
         recipe_path(recipe_path_),
-        key(key_)
+        key(key_),
+        alt_key(alt_key_)
     {}
 };
 
-std::array<std::shared_ptr<MacroFrameGenerator>, 255> gens_map;
+// array of gen/boolean of whether we should color shift
+
+std::array<std::pair<std::shared_ptr<MacroFrameGenerator>, bool>, 255> gens_map;
 
 void placeGen(KeyMap key_map)
 {
+    std::shared_ptr<MacroFrameGenerator> gen = generatorFromOption(key_map.recipe_path);
+
     int index = (int)key_map.key;
-    gens_map[index] = generatorFromOption(key_map.recipe_path);
+    int alt_index = (int)key_map.alt_key;
+    gens_map[index] = std::pair<std::shared_ptr<MacroFrameGenerator>, bool>(gen, false);
+    gens_map[alt_index] = std::pair<std::shared_ptr<MacroFrameGenerator>, bool>(gen, true);
 }
 
 // Freedom
@@ -119,85 +127,84 @@ int main( int argc, char** argv )
     }
 
     // std::vector<KeyMap> key_maps = {
-    //     KeyMap("resources/recipes/esplode_lightbulb.yaml", '`'),
+    //     KeyMap("resources/recipes/esplode_lightbulb.yaml", '`', '~'),
     // };
 
     std::vector<KeyMap> key_maps = {
         // intro
-        KeyMap("resources/recipes/eye_remosaicsartwork.yaml", ','),
+        KeyMap("resources/recipes/eye_remosaicsartwork.yaml", ',', '~'),
     
         // Freedom
-        KeyMap("resources/recipes/sunset1_explode.yaml", '1'),
-        KeyMap("resources/recipes/orbit_explode.yaml", '2'),
-        KeyMap("resources/recipes/shuttle_geom.yaml", '3'),
-        KeyMap("resources/recipes/longtrail_smoke1.yaml", '4'),
-        KeyMap("resources/recipes/crystal_geom.yaml", '5'),
-        KeyMap("resources/recipes/mithril_wave.yaml", '6'),
-        KeyMap("resources/recipes/wave_wave.yaml", '7'),
-        KeyMap("resources/recipes/puff_fastpaint.yaml", '8'),
+        KeyMap("resources/recipes/sunset1_explode.yaml", '1', '!'),
+        KeyMap("resources/recipes/orbit_explode.yaml", '2', '@'),
+        KeyMap("resources/recipes/shuttle_geom.yaml", '3', '#'),
+        KeyMap("resources/recipes/longtrail_smoke1.yaml", '4', '$'),
+        KeyMap("resources/recipes/crystal_geom.yaml", '5', '%'),
+        KeyMap("resources/recipes/mithril_wave.yaml", '6', '^'),
+        KeyMap("resources/recipes/wave_wave.yaml", '7', '&'),
+        KeyMap("resources/recipes/puff_fastpaint.yaml", '8', '*'),
     
         // break
-        KeyMap("resources/recipes/sunbulb.yaml", '9'),
+        KeyMap("resources/recipes/sunbulb.yaml", '9', '('),
     
         // Beneath
-        KeyMap("resources/recipes/jelly_explode.yaml", '0'),
-        KeyMap("resources/recipes/shroom_geomflower.yaml", '-'),
-        KeyMap("resources/recipes/shroom_face2.yaml", '='),
-        KeyMap("resources/recipes/whispflower_smoke1.yaml", 'q'),
-        KeyMap("resources/recipes/electric_lightbulb.yaml", 'w'),
-        KeyMap("resources/recipes/explode_explode.yaml", 'e'),
-        KeyMap("resources/recipes/fractalsmoke_smoke1.yaml", 'r'),
-        KeyMap("resources/recipes/run_bloom1.yaml", 't'),
-        KeyMap("resources/recipes/explode_explode.yaml", 'y'),
+        KeyMap("resources/recipes/jelly_explode.yaml", '0', ')'),
+        KeyMap("resources/recipes/shroom_geomflower.yaml", '-', '-'),
+        KeyMap("resources/recipes/shroom_face2.yaml", '=', '+'),
+        KeyMap("resources/recipes/whispflower_smoke1.yaml", 'q', 'Q'),
+        KeyMap("resources/recipes/electric_lightbulb.yaml", 'w', 'W'),
+        KeyMap("resources/recipes/explode_explode.yaml", 'e', 'E'),
+        KeyMap("resources/recipes/fractalsmoke_smoke1.yaml", 'r', 'R'),
+        KeyMap("resources/recipes/run_bloom1.yaml", 't', 'T'),
+        KeyMap("resources/recipes/explode_explode.yaml", 'y', 'Y'),
     
         // break
-        KeyMap("resources/recipes/yeezy_smoke1.yaml", 'u'),
+        KeyMap("resources/recipes/yeezy_smoke1.yaml", 'u', 'U'),
     
         // kanye gifs
-        KeyMap("resources/recipes/nosmiling_explode.yaml", 'i'),
-        KeyMap("resources/recipes/kanyeheart_face2.yaml", 'o'),
-        KeyMap("resources/recipes/headsmoke_wave.yaml", 'p'),
-        KeyMap("resources/recipes/bart_geomflower.yaml", '['),
-        KeyMap("resources/recipes/gridsunset_geomflower.yaml", ']'),
-        KeyMap("resources/recipes/cig_wave.yaml", '\\'),
-        KeyMap("resources/recipes/me_glasses_smoke1.yaml", 'a'),
-        KeyMap("resources/recipes/muppet_face2.yaml", 's'),
-        KeyMap("resources/recipes/kanyeheart_smoke1.yaml", 'd'),
+        KeyMap("resources/recipes/nosmiling_explode.yaml", 'i', 'I'),
+        KeyMap("resources/recipes/kanyeheart_face2.yaml", 'o', 'O'),
+        KeyMap("resources/recipes/headsmoke_wave.yaml", 'p', 'P'),
+        KeyMap("resources/recipes/bart_geomflower.yaml", '[', '{'),
+        KeyMap("resources/recipes/gridsunset_geomflower.yaml", ']', '}'),
+        KeyMap("resources/recipes/cig_wave.yaml", '\\', '|'),
+        KeyMap("resources/recipes/me_glasses_smoke1.yaml", 'a', 'A'),
+        KeyMap("resources/recipes/kanyeheart_smoke1.yaml", 's', 'S'),
     
         // break
-        KeyMap("resources/recipes/comet_lightbulb.yaml", 'd'),
+        KeyMap("resources/recipes/comet_lightbulb.yaml", 'd', 'D'),
     
         // Secrets
-        KeyMap("resources/recipes/body_smoke1.yaml", 'f'),
-        KeyMap("resources/recipes/cube_smoke1.yaml", 'g'),
-        KeyMap("resources/recipes/pourskull_bloom1.yaml", 'h'),
-        KeyMap("resources/recipes/skullexplode_lightbulb.yaml", 'j'),
-        KeyMap("resources/recipes/burningman_lightbulb.yaml", 'k'),
-        KeyMap("resources/recipes/burningman_explode.yaml", 'l'),
-        KeyMap("resources/recipes/3dfractal_geomflower.yaml", ';'),
-        KeyMap("resources/recipes/mandelbrot_lightbulb.yaml", '\''),
-        KeyMap("resources/recipes/skeleton_face2.yaml", 'z'),
-        KeyMap("resources/recipes/nazi_face2.yaml", 'x'),
+        KeyMap("resources/recipes/body_smoke1.yaml", 'f', 'F'),
+        KeyMap("resources/recipes/cube_smoke1.yaml", 'g', 'G'),
+        KeyMap("resources/recipes/pourskull_bloom1.yaml", 'h', 'H'),
+        KeyMap("resources/recipes/skullexplode_lightbulb.yaml", 'j', 'J'),
+        KeyMap("resources/recipes/burningman_lightbulb.yaml", 'k', 'K'),
+        KeyMap("resources/recipes/burningman_explode.yaml", 'l', 'L'),
+        KeyMap("resources/recipes/3dfractal_geomflower.yaml", ';', ':'),
+        KeyMap("resources/recipes/mandelbrot_lightbulb.yaml", '\'', '\"'),
+        KeyMap("resources/recipes/skeleton_face2.yaml", 'z', 'Z'),
+        KeyMap("resources/recipes/nazi_face2.yaml", 'x', 'X'),
     
         // break
-        KeyMap("resources/recipes/longtrail_lightbulb.yaml", 'c'),
+        KeyMap("resources/recipes/longtrail_lightbulb.yaml", 'c', 'C'),
     
         // Year of Valor
-        KeyMap("resources/recipes/geomflower_remosaicsartwork.yaml", 'v'),
-        KeyMap("resources/recipes/cubefractal_fastpaint.yaml", 'b'),
-        KeyMap("resources/recipes/lake_lightbulb.yaml", 'n'),
-        KeyMap("resources/recipes/monk_explode.yaml", 'm'),
-        KeyMap("resources/recipes/mouthsmoke_smoke1.yaml", ','),
-        KeyMap("resources/recipes/mouthsmoke1_smoke1.yaml", '.'),
+        KeyMap("resources/recipes/geomflower_remosaicsartwork.yaml", 'v', 'V'),
+        KeyMap("resources/recipes/cubefractal_fastpaint.yaml", 'b', 'B'),
+        KeyMap("resources/recipes/lake_lightbulb.yaml", 'n', 'N'),
+        KeyMap("resources/recipes/monk_explode.yaml", 'm', 'M'),
+        KeyMap("resources/recipes/mouthsmoke_smoke1.yaml", ',', '<'),
+        KeyMap("resources/recipes/mouthsmoke1_smoke1.yaml", '.', '>'),
     
         // outro
-        KeyMap("resources/recipes/water_lightbulb.yaml", '/'),
+        KeyMap("resources/recipes/water_lightbulb.yaml", '/', '?'),
     };
 
     std::shared_ptr<MacroFrameGenerator> default_gen = generatorFromOption("resources/recipes/eye_remosaicsartwork.yaml");
     for (int i = 0; i < 255; i++)
     {
-        gens_map[i] = default_gen;
+        gens_map[i] = std::pair<std::shared_ptr<MacroFrameGenerator>, bool>(default_gen, false);
     }
 
     int count = 0;
@@ -235,7 +242,7 @@ int main( int argc, char** argv )
 
     while (true)
     {
-        key = gens_map[key]->loop();
+        key = gens_map[key].first->loop(gens_map[key].second);
     }
 
     return 0;
