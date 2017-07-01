@@ -100,18 +100,40 @@ struct KeyMap
 std::array<std::array<std::pair<std::shared_ptr<MacroFrameGenerator>, bool>, 255>, 6> gens_maps;
 
 
+int animation_count = 0;
+
+// macbook
+int out_height = 1050;
+int out_width = 1680;
+
+// Ilya's Projector
+// int out_height = 720;
+// int out_width = 1280;
+
+// Independent
+// int out_height = 768;
+// int out_width = 1024;
+
 void placeGen(int map_index, KeyMap key_map)
 {
-    static int count = 0;
     std::shared_ptr<MacroFrameGenerator> gen = generatorFromOption(key_map.recipe_path);
 
     int index = (int)key_map.key;
     int alt_index = (int)key_map.alt_key;
     gens_maps[map_index][index] = std::pair<std::shared_ptr<MacroFrameGenerator>, bool>(gen, false);
     gens_maps[map_index][alt_index] = std::pair<std::shared_ptr<MacroFrameGenerator>, bool>(gen, true);
-    count++;
+    animation_count++;
     std::cout << "completed: " << key_map.recipe_path << std::endl;
-    std::cout << "completed: " << count << std::endl;
+    std::cout << "completed: " << animation_count << std::endl;
+    Mat flicker_output(out_height, out_width, CV_8UC3, Scalar(0,0,0));
+    imshow("window_name", flicker_output);
+    waitKey(20);
+    Mat blank_output(out_height, out_width, CV_8UC3, Scalar(255,0,0));
+    char ch[200];
+    sprintf(ch,"CH %d",animation_count);
+    cv::putText(blank_output, ch, Point2f(40,80), FONT_HERSHEY_PLAIN, 5,  Scalar(250,255,250), 5);
+    imshow("window_name", blank_output);
+    waitKey(1);
 }
 
 // Freedom
@@ -122,6 +144,10 @@ void placeGen(int map_index, KeyMap key_map)
 
 int main( int argc, char** argv )
 {
+
+    namedWindow("window_name", CV_WINDOW_NORMAL);
+    setWindowProperty("window_name", CV_WND_PROP_FULLSCREEN, CV_WINDOW_FULLSCREEN);
+
     // default image
     std::shared_ptr<MacroFrameGenerator> default_gen = generatorFromOption("resources/recipes/eye_remosaicsartwork.yaml");
     for (int i = 0; i < gens_maps.size(); i++)
@@ -286,7 +312,7 @@ int main( int argc, char** argv )
 
     while (true)
     {
-        int new_key = gens_maps[song][key].first->loop(gens_maps[song][key].second);
+        int new_key = gens_maps[song][key].first->loop(gens_maps[song][key].second, out_height, out_width);
         if (new_key < 0)
         {
             new_key = 0;

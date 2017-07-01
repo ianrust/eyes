@@ -78,19 +78,13 @@ public:
         return cached_frames[loop_number];
     }
 
-    int loop(bool color_shift)
+    int loop(bool color_shift, int out_height, int out_width)
     {
         MatPtr frame_hsv;
         Mat frame, frame_scaled, frame_rotated;
-        int out_height = 1050;
-        int out_width = 1680;
 
-        // int out_height = 720;
-        // int out_width = 1280;
         float output_aspect = float(out_width)/float(out_height);
         Mat output(out_height, out_width, CV_8UC3, Scalar(0,0,0));
-        namedWindow("window_name", CV_WINDOW_NORMAL);
-        setWindowProperty("window_name", CV_WND_PROP_FULLSCREEN, CV_WINDOW_FULLSCREEN);
 
         // setup glare mask
         int glare_size = 100;
