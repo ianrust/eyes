@@ -84,10 +84,22 @@ public:
         Mat frame, frame_scaled, frame_rotated;
         int out_height = 1050;
         int out_width = 1680;
+
+        // int out_height = 720;
+        // int out_width = 1280;
         float output_aspect = float(out_width)/float(out_height);
         Mat output(out_height, out_width, CV_8UC3, Scalar(0,0,0));
         namedWindow("window_name", CV_WINDOW_NORMAL);
         setWindowProperty("window_name", CV_WND_PROP_FULLSCREEN, CV_WINDOW_FULLSCREEN);
+
+        // setup glare mask
+        int glare_size = 100;
+        std::vector<Point> glarePoints;
+        glarePoints.push_back(Point(0,out_height));
+        glarePoints.push_back(Point(out_width/5,out_height-glare_size));
+        glarePoints.push_back(Point(4*out_width/5,out_height-glare_size));
+        glarePoints.push_back(Point(out_width,out_height));
+
         while (true)
         {
             frame_hsv = getMappedFrame();
@@ -117,6 +129,8 @@ public:
                 resize(frame, frame_scaled, Size(out_width, scale_height));
                 frame_scaled.copyTo(output(Rect(0, out_height/2-scale_height/2, out_width, scale_height)));
             }
+
+            cv::fillConvexPoly(output, glarePoints, Scalar(0,0,0));
 
             imshow("window_name", output);
             int key_pressed = timedSleepResponsive();

@@ -207,14 +207,14 @@ int main( int argc, char** argv )
         gens_map[i] = std::pair<std::shared_ptr<MacroFrameGenerator>, bool>(default_gen, false);
     }
 
-    int count = 0;
-    for (KeyMap& key_map : key_maps)
-    {
-        std::cout << key_map.recipe_path << std::endl;
-        placeGen(key_map);
-        count++;
-        std::cout << int(100*count/key_maps.size()) << "\%" << std::endl;
-    }
+    // int count = 0;
+    // for (KeyMap& key_map : key_maps)
+    // {
+    //     std::cout << key_map.recipe_path << std::endl;
+    //     placeGen(key_map);
+    //     count++;
+    //     std::cout << int(100*count/key_maps.size()) << "\%" << std::endl;
+    // }
 
     // int i = 0;
 
