@@ -103,16 +103,16 @@ std::array<std::array<std::pair<std::shared_ptr<MacroFrameGenerator>, bool>, 255
 int animation_count = 0;
 
 // macbook
-int out_height = 1050;
-int out_width = 1680;
+// int out_height = 1050;
+// int out_width = 1680;
 
 // Ilya's Projector
-// int out_height = 720;
-// int out_width = 1280;
+int out_height = 720;
+int out_width = 1280;
 
 // Independent
-// int out_height = 768;
-// int out_width = 1024;
+// int out_height = 480;
+// int out_width = 720;
 
 void placeGen(int map_index, KeyMap key_map)
 {
@@ -240,37 +240,37 @@ int main( int argc, char** argv )
 
     // Chromo, freedom, year of valor, Kayne, beneath , secrets
     
-    // TODO - Chromo
-    placeGen(0, KeyMap("resources/recipes/tea_geom.yaml", 'q', 'Q'));
-    placeGen(0, KeyMap("resources/recipes/tunnel_explode.yaml", 'w', 'W'));
-    placeGen(0, KeyMap("resources/recipes/rhombus_face2.yaml", 'e', 'E'));
-    placeGen(0, KeyMap("resources/recipes/sin_smoke1.yaml", 'r', 'R'));
-    placeGen(0, KeyMap("resources/recipes/spin_geom.yaml", 't', 'T'));
-    placeGen(0, KeyMap("resources/recipes/facefold_explode.yaml", 'y', 'Y'));
-    placeGen(0, KeyMap("resources/recipes/psych_geom.yaml", 'u', 'U'));
-    placeGen(0, KeyMap("resources/recipes/faceswirl_bloom1.yaml", 'i', 'I'));
-    placeGen(0, KeyMap("resources/recipes/thinker_lightbulb.yaml", 'o', 'O'));
+    // TODO - Chromo 2
+    placeGen(1, KeyMap("resources/recipes/tea_geom.yaml", 'q', 'Q'));
+    placeGen(1, KeyMap("resources/recipes/tunnel_explode.yaml", 'w', 'W'));
+    placeGen(1, KeyMap("resources/recipes/rhombus_face2.yaml", 'e', 'E'));
+    placeGen(1, KeyMap("resources/recipes/sin_smoke1.yaml", 'r', 'R'));
+    placeGen(1, KeyMap("resources/recipes/spin_geom.yaml", 't', 'T'));
+    placeGen(1, KeyMap("resources/recipes/facefold_explode.yaml", 'y', 'Y'));
+    placeGen(1, KeyMap("resources/recipes/psych_geom.yaml", 'u', 'U'));
+    placeGen(1, KeyMap("resources/recipes/faceswirl_bloom1.yaml", 'i', 'I'));
+    placeGen(1, KeyMap("resources/recipes/thinker_lightbulb.yaml", 'o', 'O'));
 
-    // Freedom
-    placeGen(1, KeyMap("resources/recipes/sunset1_explode.yaml", 'q', 'Q'));
-    placeGen(1, KeyMap("resources/recipes/orbit_explode.yaml", 'w', 'W'));
-    placeGen(1, KeyMap("resources/recipes/shuttle_geom.yaml", 'e', 'E'));
-    placeGen(1, KeyMap("resources/recipes/longtrail_smoke1.yaml", 'r', 'R'));
-    placeGen(1, KeyMap("resources/recipes/crystal_geom.yaml", 't', 'T'));
-    placeGen(1, KeyMap("resources/recipes/mithril_wave.yaml", 'y', 'Y'));
-    placeGen(1, KeyMap("resources/recipes/wave_wave.yaml", 'u', 'U'));
-    placeGen(1, KeyMap("resources/recipes/puff_fastpaint.yaml", 'i', 'I'));
+    // Freedom 1
+    placeGen(0, KeyMap("resources/recipes/sunset1_explode.yaml", 'q', 'Q'));
+    placeGen(0, KeyMap("resources/recipes/orbit_explode.yaml", 'w', 'W'));
+    placeGen(0, KeyMap("resources/recipes/shuttle_geom.yaml", 'e', 'E'));
+    placeGen(0, KeyMap("resources/recipes/longtrail_smoke1.yaml", 'r', 'R'));
+    placeGen(0, KeyMap("resources/recipes/crystal_geom.yaml", 't', 'T'));
+    placeGen(0, KeyMap("resources/recipes/mithril_wave.yaml", 'y', 'Y'));
+    placeGen(0, KeyMap("resources/recipes/wave_wave.yaml", 'u', 'U'));
+    placeGen(0, KeyMap("resources/recipes/puff_fastpaint.yaml", 'i', 'I'));
     
-    // Year of Valor
-    placeGen(2, KeyMap("resources/recipes/longtrail_lightbulb.yaml", 'q', 'Q'));
-    placeGen(2, KeyMap("resources/recipes/geomflower_remosaicsartwork.yaml", 'w', 'W'));
-    placeGen(2, KeyMap("resources/recipes/cubefractal_fastpaint.yaml", 'e', 'E'));
-    placeGen(2, KeyMap("resources/recipes/lake_lightbulb.yaml", 'r', 'R'));
-    placeGen(2, KeyMap("resources/recipes/monk_explode.yaml", 't', 'T'));
-    placeGen(2, KeyMap("resources/recipes/mouthsmoke_smoke1.yaml", 'y', 'Y'));
-    placeGen(2, KeyMap("resources/recipes/mouthsmoke1_smoke1.yaml", 'u', 'U'));
+    // Year of Valor 6
+    placeGen(5, KeyMap("resources/recipes/longtrail_lightbulb.yaml", 'q', 'Q'));
+    placeGen(5, KeyMap("resources/recipes/geomflower_remosaicsartwork.yaml", 'w', 'W'));
+    placeGen(5, KeyMap("resources/recipes/cubefractal_fastpaint.yaml", 'e', 'E'));
+    placeGen(5, KeyMap("resources/recipes/lake_lightbulb.yaml", 'r', 'R'));
+    placeGen(5, KeyMap("resources/recipes/monk_explode.yaml", 't', 'T'));
+    placeGen(5, KeyMap("resources/recipes/mouthsmoke_smoke1.yaml", 'y', 'Y'));
+    placeGen(5, KeyMap("resources/recipes/mouthsmoke1_smoke1.yaml", 'u', 'U'));
 
-    // Kanye
+    // Kanye 4
     placeGen(3, KeyMap("resources/recipes/yeezy_smoke1.yaml", 'q', 'Q'));
     placeGen(3, KeyMap("resources/recipes/nosmiling_explode.yaml", 'w', 'W'));
     placeGen(3, KeyMap("resources/recipes/kanyeheart_face2.yaml", 'e', 'E'));
@@ -281,30 +281,30 @@ int main( int argc, char** argv )
     placeGen(3, KeyMap("resources/recipes/me_glasses_smoke1.yaml", 'i', 'I'));
     placeGen(3, KeyMap("resources/recipes/kanyeheart_smoke1.yaml", 'o', 'O'));
 
-    // Beneath
-    placeGen(4, KeyMap("resources/recipes/sunbulb.yaml", 'q', 'Q'));
-    placeGen(4, KeyMap("resources/recipes/jelly_explode.yaml", 'w', 'W'));
-    placeGen(4, KeyMap("resources/recipes/shroom_geomflower.yaml", 'e', 'E'));
-    placeGen(4, KeyMap("resources/recipes/shroom_face2.yaml", 'r', 'R'));
-    placeGen(4, KeyMap("resources/recipes/whispflower_smoke1.yaml", 't', 'T'));
-    placeGen(4, KeyMap("resources/recipes/electric_lightbulb.yaml", 'y', 'Y'));
-    placeGen(4, KeyMap("resources/recipes/explode_explode.yaml", 'u', 'U'));
-    placeGen(4, KeyMap("resources/recipes/fractalsmoke_smoke1.yaml", 'i', 'I'));
-    placeGen(4, KeyMap("resources/recipes/run_bloom1.yaml", 'o', 'O'));
-    placeGen(4, KeyMap("resources/recipes/explode_explode.yaml", 'p', 'P'));
+    // Beneath 3
+    placeGen(2, KeyMap("resources/recipes/sunbulb.yaml", 'q', 'Q'));
+    placeGen(2, KeyMap("resources/recipes/jelly_explode.yaml", 'w', 'W'));
+    placeGen(2, KeyMap("resources/recipes/shroom_geomflower.yaml", 'e', 'E'));
+    placeGen(2, KeyMap("resources/recipes/shroom_face2.yaml", 'r', 'R'));
+    placeGen(2, KeyMap("resources/recipes/whispflower_smoke1.yaml", 't', 'T'));
+    placeGen(2, KeyMap("resources/recipes/electric_lightbulb.yaml", 'y', 'Y'));
+    placeGen(2, KeyMap("resources/recipes/explode_explode.yaml", 'u', 'U'));
+    placeGen(2, KeyMap("resources/recipes/fractalsmoke_smoke1.yaml", 'i', 'I'));
+    placeGen(2, KeyMap("resources/recipes/run_bloom1.yaml", 'o', 'O'));
+    placeGen(2, KeyMap("resources/recipes/explode_explode.yaml", 'p', 'P'));
     
-    // Secrets
-    placeGen(5, KeyMap("resources/recipes/comet_lightbulb.yaml", 'q', 'Q'));
-    placeGen(5, KeyMap("resources/recipes/body_smoke1.yaml", 'w', 'W'));
-    placeGen(5, KeyMap("resources/recipes/cube_smoke1.yaml", 'e', 'E'));
-    placeGen(5, KeyMap("resources/recipes/pourskull_bloom1.yaml", 'r', 'R'));
-    placeGen(5, KeyMap("resources/recipes/skullexplode_lightbulb.yaml", 't', 'T'));
-    placeGen(5, KeyMap("resources/recipes/burningman_lightbulb.yaml", 'y', 'Y'));
-    placeGen(5, KeyMap("resources/recipes/burningman_explode.yaml", 'u', 'U'));
-    placeGen(5, KeyMap("resources/recipes/3dfractal_geomflower.yaml", 'i', 'I'));
-    placeGen(5, KeyMap("resources/recipes/mandelbrot_lightbulb.yaml", 'o', 'O'));
-    placeGen(5, KeyMap("resources/recipes/skeleton_face2.yaml", 'p', 'P'));
-    placeGen(5, KeyMap("resources/recipes/nazi_face2.yaml", '[', '{'));
+    // Secrets 5 
+    placeGen(4, KeyMap("resources/recipes/comet_lightbulb.yaml", 'q', 'Q'));
+    placeGen(4, KeyMap("resources/recipes/body_smoke1.yaml", 'w', 'W'));
+    placeGen(4, KeyMap("resources/recipes/cube_smoke1.yaml", 'e', 'E'));
+    placeGen(4, KeyMap("resources/recipes/pourskull_bloom1.yaml", 'r', 'R'));
+    placeGen(4, KeyMap("resources/recipes/skullexplode_lightbulb.yaml", 't', 'T'));
+    placeGen(4, KeyMap("resources/recipes/burningman_lightbulb.yaml", 'y', 'Y'));
+    placeGen(4, KeyMap("resources/recipes/burningman_explode.yaml", 'u', 'U'));
+    placeGen(4, KeyMap("resources/recipes/3dfractal_geomflower.yaml", 'i', 'I'));
+    placeGen(4, KeyMap("resources/recipes/mandelbrot_lightbulb.yaml", 'o', 'O'));
+    placeGen(4, KeyMap("resources/recipes/skeleton_face2.yaml", 'p', 'P'));
+    placeGen(4, KeyMap("resources/recipes/nazi_face2.yaml", '[', '{'));
 
 
     int key = '`';
